@@ -1,33 +1,11 @@
-# Phaser JS Boilerplate v0.1.3
+# Phaser Boilerplate
 
-Automated workflow to [Phaser](https://github.com/photonstorm/phaser) Game Development (based on [FireShell](http://getfireshell.com/)).
+Phaser Boilerplate is a blank and solid place to get up and running quickly with a new phaser game project. 
 
-## Jump start
+Phaser Boilerplate is built using [Html 5 Boilerplate](http://html5boilerplate.com/), [Sass](http://sass-lang.com/), [Gulp](http://gulpjs.com/) and of course [Phaser.](http://phaser.io/)
 
-Get started with Phaser-Boilerplate:
+All credit belongs to the contibutors and maintainers of said projects.
 
-1. Download and Install [NodeJS](http://nodejs.org/).
-2. Install grunt-cli ```npm install -g grunt-cli```.
-3. start the workflow double-clicking on ```grunt-dev.bat``` (Windows) or ```grunt-dev.command``` (Unix).
+I'm just some guy who put some awesome things I use together.
 
-## Features
-
-- auto-reload game page on changes.
-- auto-browserify
-- auto-minification of js files
-
-## Contributing
-
-####Steps to contributing:
-* Create your feature branch, commit changes and push to origin
-* Submit a Pull Request with details on your feature branch
-
-####Guidelines:
-* Non-trivial changes should be discussed in an issue first
-* Do not create issues for support reasons, use [Stack Overflow](http://stackoverflow.com)
-
-FireShell is maintained by [Luiz "Bills"](//github.com/luizbills) and it's contributors;
-
-## License
-
-Licensed under MIT.
+Happy building!
