@@ -9,7 +9,8 @@ Get started with Phaser-Boilerplate:
 1. Download and Install [NodeJS](http://nodejs.org/).
 2. Install gulp ```npm install -g gulp```.
 3. Install Ruby and Compass
-4. Start the workflow ```gulp```.
+4. Install npm dependencies ```npm install```.
+5. Start the workflow ```gulp```.
 
 ## License
 
