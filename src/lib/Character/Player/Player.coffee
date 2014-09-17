@@ -1,4 +1,4 @@
-class Player extends GameCharacter
+class Player extends GameObject
 
     constructor: ->
 

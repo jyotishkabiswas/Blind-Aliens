@@ -1,4 +1,4 @@
-class Alien extends GameCharacter
+class Alien extends GameObject
 
     constructor: (loc) ->
 

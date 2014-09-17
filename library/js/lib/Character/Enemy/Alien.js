@@ -13,4 +13,4 @@ Alien = (function(_super) {
 
   return Alien;
 
-})(GameCharacter);
+})(GameObject);
