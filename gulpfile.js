@@ -106,8 +106,7 @@ gulp.task('coffee', function() {
 });
 //LINT JS
 gulp.task('js-lint', function() {
-    gulp.src(jsConcatSrc)
-        .pipe(changed(jsConcatSrc))
+    gulp.src([libSrc, mainSrc])
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'))
 });
