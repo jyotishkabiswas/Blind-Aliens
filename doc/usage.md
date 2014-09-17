@@ -44,6 +44,10 @@ A basic HTML5 Boilerplate site initially looks something like this:
 
 What follows is a general overview of each major part and how to use them.
 
+### src
+
+This directory contains all coffeescript files. You should not be writing any javascript or otherwise making any changes to the library/js folder. All of the coffeescript will ultimately compile to library/js/min/scripts.min.js, which is what the game will use. Everything under the lib folder will be loaded first. The main.coffee file will be loaded last and will initialize the game. This is very important. Don't add any other files to the root of this directory, and make any game-level changes to main.coffee. Changes to things like player mechanics and enemy AI should be made to the respective classes in the lib folder.
+
 ### css
 
 This directory should contain all your project's CSS files. It includes some
