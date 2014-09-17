@@ -1,11 +1,16 @@
-# Phaser Boilerplate
+# Phaser JS Boilerplate v0.1.3
 
-Phaser Boilerplate is a blank and solid place to get up and running quickly with a new phaser game project. 
+Automated workflow to [Phaser](https://github.com/photonstorm/phaser) Game Development (based on [FireShell](http://getfireshell.com/)).
 
-Phaser Boilerplate is built using [Html 5 Boilerplate](http://html5boilerplate.com/), [Sass](http://sass-lang.com/), [Gulp](http://gulpjs.com/) and of course [Phaser.](http://phaser.io/)
+## Jump start
 
-All credit belongs to the contibutors and maintainers of said projects.
+Get started with Phaser-Boilerplate:
 
-I'm just some guy who put some awesome things I use together.
+1. Download and Install [NodeJS](http://nodejs.org/).
+2. Install gulp ```npm install -g gulp```.
+3. Install Ruby and Compass
+4. Star the workflow ```gulp```.
 
-Happy building!
+## License
+
+Licensed under MIT.
