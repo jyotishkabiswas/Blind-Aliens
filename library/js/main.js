@@ -1,14 +1,17 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-stage', { preload: preload, create: create, update: update });
+var create, game, preload, update;
 
-function preload() {
-    game.load.image('renderTest', 'library/assets/mario.png');
+preload = function() {
+  game.load.image("renderTest", "library/assets/mario.png");
+};
 
-}
+create = function() {
+  game.add.sprite(400 - 32, 300 - 32, "renderTest");
+};
 
-function create() {
-    game.add.sprite(400 - 32, 300 - 32, 'renderTest');
-}
+update = function() {};
 
-function update() {
-
-}
+game = new Phaser.Game(800, 600, Phaser.AUTO, "phaser-stage", {
+  preload: preload,
+  create: create,
+  update: update
+});

@@ -5,6 +5,7 @@
 // PLUGIN CALLS
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
+var coffee = require('gulp-coffee');
 var compass = require('gulp-compass');
 var plumber = require('gulp-plumber');
 var concat = require('gulp-concat');
@@ -30,11 +31,13 @@ var libs = 'library';
 var jsWatch = 'library/js/**/*.js';
 // GENERAL PATH
 var jsPath = 'library/js';
+var coffeePath = 'src/**/*.coffee';
 // MINIFY PATHS
 var jsMinSrc = 'library/js/min/scripts.min.js';
 var jsMinDest = 'library/js/min';
 // CONCAT PATHS
-var jsConcatSrc =  'library/js/*.js';
+var libSrc = 'library/js/lib/**/*.js';
+var mainSrc = 'library/js/main.js';
 var jsConcatDest = 'scripts.min.js';
 
 // ==========================================================================//
@@ -95,6 +98,12 @@ gulp.task('watch', function(){
 //    2.1 --- JAVASCRIPT                                                     //
 //========================================================================== //
 
+// COFFEESCRIPT
+gulp.task('coffee', function() {
+    gulp.src(coffeePath)
+        .pipe(coffee({bare: true}).on('error', console.log))
+        .pipe(gulp.dest(jsPath))
+});
 //LINT JS
 gulp.task('js-lint', function() {
     gulp.src(jsConcatSrc)
@@ -105,8 +114,7 @@ gulp.task('js-lint', function() {
 
 //CONCAT & MINIFY
 gulp.task('js-process', function() {
-    gulp.src(jsConcatSrc)
-        .pipe(changed(jsConcatSrc))
+    gulp.src([libSrc, mainSrc])
         .pipe(plumber())
         .pipe(concat(jsConcatDest))
         .pipe(uglify())
@@ -157,7 +165,7 @@ gulp.task('connect', function() {
 //    4.0 --- CUSTOM TASKS                                                   //
 //========================================================================== //
 
-gulp.task('default', ['sass', 'js-lint', 'js-process', 'watch'] );
-gulp.task('js-debug', ['js-lint'] );
-gulp.task('serve', ['connect', 'sass', 'js-lint', 'js-process', 'watch'] );
-gulp.task('production', ['sass', 'js-process']);
+gulp.task('default', ['sass', 'coffee', 'js-lint', 'js-process', 'watch'] );
+gulp.task('js-debug', ['coffee', 'js-lint'] );
+gulp.task('serve', ['connect', 'sass', 'coffee', 'js-lint', 'js-process', 'watch'] );
+gulp.task('production', ['sass', 'coffee', 'js-process']);
