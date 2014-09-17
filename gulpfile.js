@@ -88,7 +88,7 @@ var compassSettings = {
 
 //WATCH
 gulp.task('watch', function(){
-    gulp.watch(jsWatch, [ 'js-lint', 'js-process']);
+    gulp.watch(jsWatch, ['js-process']);
     gulp.watch(sassWatch, ['sass']);
     gulp.watch(htmlSrc, ['html-reload']);
     gulp.watch(phpSrc, ['php-reload']);
@@ -105,11 +105,11 @@ gulp.task('coffee', function() {
         .pipe(gulp.dest(jsPath))
 });
 //LINT JS
-gulp.task('js-lint', function() {
-    gulp.src([libSrc, mainSrc])
-        .pipe(jshint())
-        .pipe(jshint.reporter('jshint-stylish'))
-});
+// gulp.task('js-lint', function() {
+//     gulp.src([libSrc, mainSrc])
+//         .pipe(jshint())
+//         .pipe(jshint.reporter('jshint-stylish'))
+// });
 
 //CONCAT & MINIFY
 gulp.task('js-process', function() {
@@ -164,7 +164,7 @@ gulp.task('connect', function() {
 //    4.0 --- CUSTOM TASKS                                                   //
 //========================================================================== //
 
-gulp.task('default', ['sass', 'coffee', 'js-lint', 'js-process', 'watch'] );
-gulp.task('js-debug', ['coffee', 'js-lint'] );
-gulp.task('serve', ['connect', 'sass', 'coffee', 'js-lint', 'js-process', 'watch'] );
+gulp.task('default', ['sass', 'coffee', 'js-process', 'watch'] );
+gulp.task('js-debug', ['coffee'] );
+gulp.task('serve', ['connect', 'sass', 'coffee', 'js-process', 'watch'] );
 gulp.task('production', ['sass', 'coffee', 'js-process']);
