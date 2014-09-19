@@ -1,17 +1,9 @@
-var create, game, preload, update;
+var game;
 
-preload = function() {
-  game.load.image("renderTest", "library/assets/mario.png");
-};
+game = new Phaser.Game(800, 600, Phaser.AUTO, "phaser-stage");
 
-create = function() {
-  game.add.sprite(400 - 32, 300 - 32, "renderTest");
-};
+game.state.add("menu", Menu);
 
-update = function() {};
+game.state.add("play", Play);
 
-game = new Phaser.Game(800, 600, Phaser.AUTO, "phaser-stage", {
-  preload: preload,
-  create: create,
-  update: update
-});
+game.state.start("play");
