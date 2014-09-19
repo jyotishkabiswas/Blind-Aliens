@@ -13,4 +13,4 @@ Player = (function(_super) {
 
   return Player;
 
-})(GameCharacter);
+})(GameObject);
