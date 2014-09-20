@@ -5,4 +5,4 @@
 /bower_components/phaser/
 /.sass-cache/
 .sass-cache
-/library/js/*
+library/js/*
