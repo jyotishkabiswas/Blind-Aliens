@@ -1,7 +1,7 @@
 class Player extends GameObject
 
-    constructor: ->
-    	@sprite = game.add.sprite 0, 0, "player"
+    constructor: (@x, @y) ->
+    	@sprite = game.add.sprite @x, @y, "player"
     	game.physics.arcade.enable(@sprite)
     	@sprite.body.collideWorldBounds = true
 
