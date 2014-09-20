@@ -6,9 +6,8 @@ Play.prototype = {
     create: ->
         game.physics.startSystem(Phaser.Physics.ARCADE)
         game.add.sprite 0, 0, "background"
-        player = new Player 50, 50
-        cursors = game.input.keyboard.createCursorKeys()
+        @player = new Player 50, 50
 
     update: ->
-
+        @player.update()
 }
