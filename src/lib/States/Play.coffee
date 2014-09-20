@@ -1,8 +1,14 @@
 Play = ->
 Play.prototype = {
-	preload: ->
-		game.load.image "background", "library/assets/background.png"
-	create: ->
-		game.add.sprite 0, 0, "background"
-	update: ->
+    preload: ->
+        game.load.image "background", "library/assets/background.png"
+        game.load.image "player", "library/assets/mario.png"
+    create: ->
+        game.physics.startSystem(Phaser.Physics.ARCADE)
+        game.add.sprite 0, 0, "background"
+        player = new Player()
+        cursors = game.input.keyboard.createCursorKeys()
+
+    update: ->
+
 }
