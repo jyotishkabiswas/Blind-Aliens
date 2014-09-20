@@ -6,4 +6,4 @@ game.state.add("menu", Menu);
 
 game.state.add("play", Play);
 
-game.state.start("play");
+game.state.start("menu");
