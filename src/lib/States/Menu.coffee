@@ -1,9 +1,9 @@
 Menu = ->
 Menu.prototype = {
 	preload: ->
-		# game.load.image "renderTest", "library/assets/mario.png"
+		game.load.image "background", "library/assets/background.png"
 	create: ->
-		# game.add.sprite 400 - 32, 300 - 32, "renderTest"
+		game.add.sprite 0, 0, "background"
 		titleText = game.add.text(
 			game.world.centerX,
 			150,
