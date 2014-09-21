@@ -29,7 +29,7 @@ class Player extends GameObject
         # Die if you hit an alien
         for k, v of GameObjects
             if v.isAlien
-                return game.physics.arcade.collide @sprite, v.sprite, @destroy, null, @
+                game.physics.arcade.collide @sprite, v.sprite, @destroy, null, @
 
         # reset acceleration to start
         @sprite.body.acceleration.x = 0
@@ -96,6 +96,7 @@ class Player extends GameObject
             @sprite.body.y = @sprite.body.y - y + game.height - 20
             @sprite.body.velocity.y = 0
             @sprite.body.acceleration.y = 0
+
     destroy: ->
         super()
         game.stage.backgroundColor = '#992d2d'
@@ -103,3 +104,4 @@ class Player extends GameObject
         window.setTimeout ->
             ct.sprite.destroy()
             game.state.start "menu"
+        , 500
