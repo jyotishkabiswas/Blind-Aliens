@@ -28,7 +28,8 @@ var libs = 'library';
 //========================================================================== //
 
 // WATCH PATH
-var jsWatch = 'library/js/**/*.js';
+// var jsWatch = 'library/js/**/*.js';
+var coffeeWatch = 'src/**/*.coffee';
 // GENERAL PATH
 var jsPath = 'library/js';
 var coffeePath = 'src/**/*.coffee';
@@ -88,7 +89,7 @@ var compassSettings = {
 
 //WATCH
 gulp.task('watch', function(){
-    gulp.watch(jsWatch, ['js-process']);
+    gulp.watch(coffeeWatch, ['js-process']);
     gulp.watch(sassWatch, ['sass']);
     gulp.watch(htmlSrc, ['html-reload']);
     gulp.watch(phpSrc, ['php-reload']);
