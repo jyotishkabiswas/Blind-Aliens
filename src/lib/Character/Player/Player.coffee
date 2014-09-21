@@ -5,8 +5,10 @@ class Player extends GameObject
         @sprite = game.add.sprite @x, @y, "player"
         game.physics.arcade.enable(@sprite)
         @sprite.body.collideWorldBounds = true
-        @sprite.anchor.setTo(0.5,0.75)
+        @sprite.anchor.x = .5
+        @sprite.anchor.y = .75
         @i = 0
+        @countdown = 4000
 
     update: ->
         @sprite.body.acceleration.x = 0
@@ -31,8 +33,16 @@ class Player extends GameObject
         @sprite.body.acceleration.y = -5 * @sprite.body.velocity.y if @sprite.body.acceleration.y == 0
 
         @i = @i + 1
-        dx = @sprite.body.x - game.input.mousePointer.x
-        dy = @sprite.body.y - game.input.mousePointer.y
+        dx = @sprite.body.x + @sprite.body.width * @sprite.anchor.x - game.input.mousePointer.x
+        dy = @sprite.body.y + @sprite.body.height * @sprite.anchor.y - game.input.mousePointer.y
         @sprite.angle = -105 + 180 * Math.atan2(dy, dx) / Math.PI + 15 * Math.sin(@i / 100.0)
 
+
+        @countdown = @countdown - Math.abs(@sprite.body.velocity.x) - Math.abs(@sprite.body.velocity.y)
+        if @countdown < 0
+            @countdown = 4000
+            new Circle @sprite.body.x + @sprite.body.width * @sprite.anchor.x, @sprite.body.y + @sprite.body.height * @sprite.anchor.y, Math.max(Math.abs(@sprite.body.velocity.x), Math.abs(@sprite.body.velocity.y)) * 2
+
+        @sprite.bringToTop()
+        
     destroy: ->
