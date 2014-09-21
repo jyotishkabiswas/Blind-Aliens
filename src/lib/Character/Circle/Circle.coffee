@@ -18,10 +18,11 @@ class Circle extends GameObject
         @sprite.alpha = 1.0 - val / @rad
         if @invalid()
             @destroy()
+
     invalid: ->
         @sprite.height > 2 * @rad
+
     destroy: ->
-        super()
         @sprite.destroy()
         @sfx.destroy()
-        # Circles = (circle for circle in Circles when circle != @)
+        super()

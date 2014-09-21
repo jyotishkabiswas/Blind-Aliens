@@ -2,7 +2,7 @@ GameObjects = {}
 
 class GameObject
 
-    constructor: () ->
+    constructor: ->
         @id = Utils.uuid()
         GameObjects[@id] = @
 
