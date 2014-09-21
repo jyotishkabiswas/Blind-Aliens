@@ -1,7 +1,7 @@
 class Circle extends GameObject
 
-    constructor: (@x, @y, @r) ->
-        super()
+    constructor: (@x, @y, @r, state) ->
+        super(state)
         @sprite = game.add.sprite @x, @y, "circle"
         @sprite.anchor.x = .5
         @sprite.anchor.y = .5

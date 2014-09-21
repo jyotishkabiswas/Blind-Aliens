@@ -1,12 +1,12 @@
 class ShadowMask extends GameObject
 
-    constructor: (player) -> 
-        super()
-        @player = player 
-        @x = @player.x - 800 
+    constructor: (player, state) ->
+        super(state)
+        @player = player
+        @x = @player.x - 800
         @y = @player.y - 600
-        @sprite = game.add.sprite @x, @y, "shadowmask" 
-             
+        @sprite = game.add.sprite @x, @y, "shadowmask"
+
     update: ->
         @sprite.x = @player.sprite.x - 800
         @sprite.y = @player.sprite.y - 600

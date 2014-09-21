@@ -1,43 +1,32 @@
 class Alien extends GameObject
 
-    @STATES:
-        UNAWARE: "WAITING"
-        AWARE:
-            x: 0
-            y: 0
-
-    constructor: (x, y) ->
-        super()
+    constructor: (x, y, state) ->
+        super(state)
         @type = 'alien'
         @MAX_SPEED = 200
         @MAX_ACCELERATION = 500
-        @state = @constructor.STATES.UNAWARE
-        @sprite = game.add.sprite x, y, "alien"
+        @sprite = game.add.sprite x, y, "circle"
+        @sprite.wrapper = @
         @sprite.scale.setTo 0.3, 0.3
         game.physics.arcade.enable @sprite
         @sprite.body.collideWorldBounds = true
         @sprite.anchor.setTo 0.5,0.5
-        @state = @constructor.STATES.UNAWARE
 
     update: ->
         @sprite.bringToTop()
-        for k, v of GameObjects
+        for k, v of @state.GameObjects
             if v.type == 'bullet'
                 game.physics.arcade.collide @sprite, v.sprite, @_hitByBullet, null, @
             else
                 game.physics.arcade.collide @sprite, v.sprite
-        if GameState.playerLocation?
-            @state = GameState.playerLocation
-        else
-            @state = @constructor.STATES.UNAWARE
-        if @state is @constructor.STATES.UNAWARE
-            @_randomWalk()
-        else
+        if @state.GameState.playerLocation?
             @_awareWalk()
+        else
+            @_randomWalk()
 
     _hitByBullet: (a, b) ->
-        a.destroy()
-        b.destroy()
+        a.wrapper.destroy()
+        b.wrapper.destroy()
 
     # Accelerate at a random angle by @MAX_ACCELERATION
     _randomWalk: ->
@@ -49,14 +38,14 @@ class Alien extends GameObject
 
     _awareWalk: ->
 
-        distance = Utils.dist @sprite.position, @state
-
+        dest = @state.GameState.playerLocation
+        distance = Utils.dist @sprite.position, dest
         if distance < @sprite.width
-            GameState.playerLocation = null
+            @state.GameState.playerLocation = null
             return
 
-        dx = @state.x - @sprite.body.position.x
-        dy = @state.y - @sprite.body.position.y
+        dx = dest.x - @sprite.body.position.x
+        dy = dest.y - @sprite.body.position.y
 
         angle = (dx*dx + dy*dy)/(@MAX_SPEED*@MAX_SPEED)
 
@@ -64,5 +53,6 @@ class Alien extends GameObject
         @sprite.body.velocity.y = @MAX_SPEED*dy/distance
 
     destroy: ->
+        @state.GameState.numAliens -= 1
         @sprite.destroy()
         super()
