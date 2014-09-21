@@ -1,6 +1,7 @@
 class ShadowMask extends GameObject
 
     constructor: (player) -> 
+        super()
         @player = player 
         @x = @player.x - 800 
         @y = @player.y - 600
