@@ -12,7 +12,7 @@ class Alien extends GameObject
         @MAX_SPEED = 200
         @MAX_ACCELERATION = 500
         @state = @constructor.STATES.UNAWARE
-        @sprite = game.add.sprite x, y, "circle"
+        @sprite = game.add.sprite x, y, "alien"
         @sprite.scale.setTo 0.3, 0.3
         game.physics.arcade.enable @sprite
         @sprite.body.collideWorldBounds = true
