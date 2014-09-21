@@ -14,7 +14,7 @@ class Player extends GameObject
         @controls.S = game.input.keyboard.addKey Phaser.Keyboard.S
         @controls.D = game.input.keyboard.addKey Phaser.Keyboard.D
 
-        @RUNNING_SPEED = 300
+        @WALKING_SPEED = 100
 
         @sprite = game.add.sprite x, y, "player"
         game.physics.arcade.enable(@sprite)
@@ -24,18 +24,24 @@ class Player extends GameObject
         @i = 0
         @footstepCountdown = 3000
         @gunCountdown = 0
-        @gun = game.add.audio "gunshot"
 
     update: ->
+
+        currSpeed = Utils.dist(@sprite.body.velocity, {x: 0, y: 0})
+
+        loud = false
 
         # Die if you hit an alien
         for k, v of GameObjects
             if v.type == 'alien'
                 game.physics.arcade.collide @sprite, v.sprite, @destroy, null, @
 
-        currSpeed = Utils.dist(@sprite.body.velocity, {x: 0, y: 0})
-        if currSpeed >= @RUNNING_SPEED
-            GameState.playerLocation = {x: @sprite.body.position.x, y: @sprite.body.position.y}
+                # You're being loud if you're too close to an alien and moving too fast
+                d = Utils.dist v.sprite.body.position, @sprite.body.position
+                if (currSpeed - @WALKING_SPEED >= d/2)
+                    loud = true
+
+        if loud then GameState.playerLocation = {x: @sprite.body.position.x, y: @sprite.body.position.y}
 
         # reset acceleration to start
         @sprite.body.acceleration.x = 0
@@ -63,30 +69,21 @@ class Player extends GameObject
         dy = @sprite.body.y + @sprite.body.height * @sprite.anchor.y - game.input.mousePointer.y
         @sprite.angle = -100 + 180 * Math.atan2(dy, dx) / Math.PI + 15 * Math.sin(@i / 100.0)
 
-        # create footstep sounds every once in a while
-        @footstepCountdown = @footstepCountdown - Math.abs(@sprite.body.velocity.x) - Math.abs(@sprite.body.velocity.y)
-        if @footstepCountdown < 0
-            @footstepCountdown = 3000
-            new Circle @sprite.body.x + @sprite.body.width * @sprite.anchor.x, @sprite.body.y + @sprite.body.height * @sprite.anchor.y, Math.max(Math.abs(@sprite.body.velocity.x), Math.abs(@sprite.body.velocity.y)) * 2
-
         # move sprite forward so footstep circles don't obscure player
         @sprite.bringToTop()
+
+        @_footstep()
 
         # fire if the gun hasn't been used too recently
         @gunCountdown = @gunCountdown - 1 if @gunCountdown > 0
         if @gunCountdown == 0 and game.input.activePointer.isDown
-            @gunCountdown = 250
-            @gun.play()
-            angle = @sprite.angle + Math.atan(.5 * @sprite.body.width / (.75 * @sprite.body.height))
-            angle = angle * Math.PI / 180.0
-            r = Math.sqrt(Math.pow(.5 * @sprite.body.width, 2) + Math.pow(.75 * @sprite.body.height, 2))
-            new Circle @sprite.body.x + @sprite.body.width * @sprite.anchor.x + r * Math.sin(angle), @sprite.body.y + @sprite.body.height * @sprite.anchor.y - r * Math.cos(angle), 2000
-            GameState.playerLocation = {x: @sprite.body.position.x, y: @sprite.body.position.y}
-        @sprite.angle = @sprite.angle + Math.max(@gunCountdown, 220) / 2.0 - 110
+            @_fire()
 
         # our own version of collision with the bounding box
         x = @sprite.body.x + @sprite.body.width * @sprite.anchor.x
         y = @sprite.body.y + @sprite.body.height * @sprite.anchor.y
+
+
         if x < 20
             @sprite.body.x = @sprite.body.x + 20 - x
             @sprite.body.velocity.x = 0
@@ -103,6 +100,36 @@ class Player extends GameObject
             @sprite.body.y = @sprite.body.y - y + game.height - 20
             @sprite.body.velocity.y = 0
             @sprite.body.acceleration.y = 0
+
+    _footstep: ->
+        # create footstep sounds every once in a while
+        @footstepCountdown = @footstepCountdown - Math.abs(@sprite.body.velocity.x) - Math.abs(@sprite.body.velocity.y)
+        if @footstepCountdown < 0
+            @footstepCountdown = 3000
+            new Circle @sprite.body.x + @sprite.body.width * @sprite.anchor.x, @sprite.body.y + @sprite.body.height * @sprite.anchor.y, Math.max(Math.abs(@sprite.body.velocity.x), Math.abs(@sprite.body.velocity.y)) * 2
+
+    _fire: ->
+        @gunCountdown = 250
+        angle = @sprite.angle
+
+        angle *= Math.PI / 180.0
+        angle += Math.atan(.5 * @sprite.body.width / (.75 * @sprite.body.height))
+
+        r = Math.sqrt(Math.pow(.5 * @sprite.body.width, 2) + Math.pow(.75 * @sprite.body.height, 2))
+        source =
+            x: @sprite.body.x + @sprite.body.width * @sprite.anchor.x + r * Math.sin(angle)
+            y: @sprite.body.y + @sprite.body.height * @sprite.anchor.y - r * Math.cos(angle)
+
+        bullet_angle = @sprite.angle + (Math.random()-0.5)*60
+
+        console.log @sprite.angle, bullet_angle
+
+        sound = new Circle source.x, source.y, 2000
+
+        @sprite.angle = bullet_angle
+        bullet = new Bullet source.x, source.y, (bullet_angle * Math.PI/180 - Math.PI/2)
+        GameState.playerLocation = {x: source.x, y: source.y}
+
 
     destroy: ->
         super()
