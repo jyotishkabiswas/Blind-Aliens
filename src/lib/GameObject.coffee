@@ -1,13 +1,14 @@
 GameObjects = {}
+GameState = {}
 
 class GameObject
 
-    constructor: (loc) ->
+    constructor: () ->
+        @isAlien = false
         @id = Utils.uuid()
         GameObjects[@id] = @
 
     update: ->
 
     destroy: ->
-
         delete GameObjects[@id]

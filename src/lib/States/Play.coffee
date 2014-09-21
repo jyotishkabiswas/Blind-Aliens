@@ -1,5 +1,5 @@
-Play = ->
-Play.prototype = {
+class Play
+
     preload: ->
         game.load.image "shadowmask", "library/assets/shadowmask.png"
         game.load.image "background", "library/assets/background.png"
@@ -7,14 +7,16 @@ Play.prototype = {
         game.load.image "circle", "library/assets/circle.png"
         game.load.audio "footstep", "library/assets/footstep.m4a"
         game.load.audio "gunshot", "library/assets/gunshot.wav"
+
     create: ->
-        game.physics.startSystem(Phaser.Physics.ARCADE)
+        GameState.playerLocation = null
+        game.physics.startSystem Phaser.Physics.ARCADE
         game.add.sprite 0, 0, "background"
-        @player = new Player 50, 50
-        @shadowmask = new ShadowMask @player
+        player = new Player 50, 50
+        shadowmask = new ShadowMask player
+        for i in [1..3]
+            alien = new Alien 150*i, 500
+
     update: ->
-        @player.update()
-        @shadowmask.update()
-        circle.update() for circle in Circles when circle?
-        	
-}
+        for k, v of GameObjects
+            v.update()

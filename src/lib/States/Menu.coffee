@@ -1,5 +1,5 @@
-Menu = ->
-Menu.prototype = {
+Menu =
+
 	preload: ->
 		game.load.image "background", "library/assets/background.png"
 	create: ->
@@ -24,4 +24,3 @@ Menu.prototype = {
 		if game.input.activePointer.justPressed()
 			game.state.start("play")
 		return
-}
