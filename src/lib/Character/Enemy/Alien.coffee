@@ -16,14 +16,14 @@ class Alien extends GameObject
         @sprite.scale.setTo 0.3, 0.3
         game.physics.arcade.enable @sprite
         @sprite.body.collideWorldBounds = true
-        @sprite.anchor.setTo 0.5,0.75
+        @sprite.anchor.setTo 0.5,0.5
         @state = @constructor.STATES.UNAWARE
 
     update: ->
         @sprite.bringToTop()
         for k, v of GameObjects
             if v.type == 'bullet'
-                game.physics.arcade.collide @sprite, v.sprite, @destroy, null, @
+                game.physics.arcade.collide @sprite, v.sprite, @_hitByBullet, null, @
             else
                 game.physics.arcade.collide @sprite, v.sprite
         if GameState.playerLocation?
@@ -35,7 +35,11 @@ class Alien extends GameObject
         else
             @_awareWalk()
 
-    # Update velocity matrix with a randomly generated vector
+    _hitByBullet: (a, b) ->
+        a.destroy()
+        b.destroy()
+
+    # Accelerate at a random angle by @MAX_ACCELERATION
     _randomWalk: ->
 
         d_theta = Math.random() * 2 * Math.PI
