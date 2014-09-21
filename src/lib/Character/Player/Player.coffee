@@ -14,9 +14,11 @@ class Player extends GameObject
         @controls.S = game.input.keyboard.addKey Phaser.Keyboard.S
         @controls.D = game.input.keyboard.addKey Phaser.Keyboard.D
 
+        @RUNNING_SPEED = 300
+
         @sprite = game.add.sprite x, y, "player"
         game.physics.arcade.enable(@sprite)
-        # @sprite.body.collideWorldBounds = true
+        @sprite.body.collideWorldBounds = true
         @sprite.anchor.x = .5
         @sprite.anchor.y = .75
         @i = 0
@@ -28,8 +30,12 @@ class Player extends GameObject
 
         # Die if you hit an alien
         for k, v of GameObjects
-            if v.isAlien
+            if v.type == 'alien'
                 game.physics.arcade.collide @sprite, v.sprite, @destroy, null, @
+
+        currSpeed = Utils.dist(@sprite.body.velocity, {x: 0, y: 0})
+        if currSpeed >= @RUNNING_SPEED
+            GameState.playerLocation = {x: @sprite.body.position.x, y: @sprite.body.position.y}
 
         # reset acceleration to start
         @sprite.body.acceleration.x = 0
@@ -75,6 +81,7 @@ class Player extends GameObject
             angle = angle * Math.PI / 180.0
             r = Math.sqrt(Math.pow(.5 * @sprite.body.width, 2) + Math.pow(.75 * @sprite.body.height, 2))
             new Circle @sprite.body.x + @sprite.body.width * @sprite.anchor.x + r * Math.sin(angle), @sprite.body.y + @sprite.body.height * @sprite.anchor.y - r * Math.cos(angle), 2000
+            GameState.playerLocation = {x: @sprite.body.position.x, y: @sprite.body.position.y}
         @sprite.angle = @sprite.angle + Math.max(@gunCountdown, 220) / 2.0 - 110
 
         # our own version of collision with the bounding box
@@ -99,9 +106,4 @@ class Player extends GameObject
 
     destroy: ->
         super()
-        game.stage.backgroundColor = '#992d2d'
-        ct = @
-        window.setTimeout ->
-            ct.sprite.destroy()
-            game.state.start "menu"
-        , 500
+        game.state.start "menu"

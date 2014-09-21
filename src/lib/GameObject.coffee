@@ -1,8 +1,9 @@
 GameObjects = {}
+GameState = {}
 
 class GameObject
 
-    constructor: ->
+    constructor: () ->
         @isAlien = false
         @id = Utils.uuid()
         GameObjects[@id] = @

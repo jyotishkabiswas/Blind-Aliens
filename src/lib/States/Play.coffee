@@ -8,9 +8,11 @@ class Play
         game.load.audio "gunshot", "library/assets/gunshot.wav"
 
     create: ->
-        game.physics.startSystem(Phaser.Physics.ARCADE)
+        GameState.playerLocation = null
+        game.physics.startSystem Phaser.Physics.ARCADE
         game.add.sprite 0, 0, "background"
         player = new Player 50, 50
+
         for i in [1..3]
             alien = new Alien 150*i, 500
 
