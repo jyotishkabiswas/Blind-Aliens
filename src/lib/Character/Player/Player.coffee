@@ -8,9 +8,10 @@ class Player extends GameObject
         @sprite.anchor.x = .5
         @sprite.anchor.y = .75
         @i = 0
-        @footstepCountdown = 4000
+        @footstepCountdown = 3000
         @gunCountdown = 0
-
+        @gun = game.add.audio "gunshot"
+	
     update: ->
         @sprite.body.acceleration.x = 0
         @sprite.body.acceleration.y = 0
@@ -41,7 +42,7 @@ class Player extends GameObject
 
         @footstepCountdown = @footstepCountdown - Math.abs(@sprite.body.velocity.x) - Math.abs(@sprite.body.velocity.y)
         if @footstepCountdown < 0
-            @footstepCountdown = 4000
+            @footstepCountdown = 3000
             new Circle @sprite.body.x + @sprite.body.width * @sprite.anchor.x, @sprite.body.y + @sprite.body.height * @sprite.anchor.y, Math.max(Math.abs(@sprite.body.velocity.x), Math.abs(@sprite.body.velocity.y)) * 2
 
         @sprite.bringToTop()
@@ -49,6 +50,7 @@ class Player extends GameObject
         @gunCountdown = @gunCountdown - 1 if @gunCountdown > 0
         if @gunCountdown == 0 and game.input.activePointer.isDown
             @gunCountdown = 250
-            
+            @gun.play()
+            new Circle @sprite.body.x + @sprite.body.width * @sprite.anchor.x, @sprite.body.y + @sprite.body.height * @sprite.anchor.y, 2000
         @sprite.angle = @sprite.angle + Math.max(@gunCountdown, 220) / 2.0 - 110
     destroy: ->
