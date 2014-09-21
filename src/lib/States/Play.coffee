@@ -1,10 +1,12 @@
 class Play
 
     preload: ->
+        game.load.image "shadowmask", "library/assets/shadowmask.png"
         game.load.image "background", "library/assets/background.png"
         game.load.image "player", "library/assets/player.png"
         game.load.image "circle", "library/assets/circle.png"
         game.load.audio "footstep", "library/assets/footstep.wav"
+        game.load.audio "footstep", "library/assets/footstep.m4a"
         game.load.audio "gunshot", "library/assets/gunshot.wav"
 
     create: ->
