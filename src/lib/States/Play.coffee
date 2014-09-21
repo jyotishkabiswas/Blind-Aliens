@@ -4,6 +4,7 @@ Play.prototype = {
         game.load.image "background", "library/assets/background.png"
         game.load.image "player", "library/assets/player.png"
         game.load.image "circle", "library/assets/circle.png"
+        game.load.audio "footstep", "library/assets/footstep.wav"
     create: ->
         game.physics.startSystem(Phaser.Physics.ARCADE)
         game.add.sprite 0, 0, "background"
@@ -11,6 +12,5 @@ Play.prototype = {
     update: ->
         @player.update()
         circle.update() for circle in Circles when circle?
-        console.log Circles
 	
 }

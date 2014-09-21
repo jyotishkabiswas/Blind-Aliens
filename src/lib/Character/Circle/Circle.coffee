@@ -10,6 +10,8 @@ class Circle extends GameObject
         @sprite.height = 10
         @rad = @r 
         Circles.push @
+        @sfx = game.add.audio "footstep"
+        @sfx.play()
 
     update: ->
         val = 3 + @sprite.width
@@ -22,4 +24,5 @@ class Circle extends GameObject
         @sprite.height > 2 * @rad
     destroy: ->
         @sprite.destroy()
+        @sfx.destroy()
         Circles = (circle for circle in Circles when circle != @)

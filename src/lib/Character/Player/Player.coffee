@@ -8,7 +8,8 @@ class Player extends GameObject
         @sprite.anchor.x = .5
         @sprite.anchor.y = .75
         @i = 0
-        @countdown = 4000
+        @footstepCountdown = 4000
+        @gunCountdown = 0
 
     update: ->
         @sprite.body.acceleration.x = 0
@@ -38,11 +39,16 @@ class Player extends GameObject
         @sprite.angle = -105 + 180 * Math.atan2(dy, dx) / Math.PI + 15 * Math.sin(@i / 100.0)
 
 
-        @countdown = @countdown - Math.abs(@sprite.body.velocity.x) - Math.abs(@sprite.body.velocity.y)
-        if @countdown < 0
-            @countdown = 4000
+        @footstepCountdown = @footstepCountdown - Math.abs(@sprite.body.velocity.x) - Math.abs(@sprite.body.velocity.y)
+        if @footstepCountdown < 0
+            @footstepCountdown = 4000
             new Circle @sprite.body.x + @sprite.body.width * @sprite.anchor.x, @sprite.body.y + @sprite.body.height * @sprite.anchor.y, Math.max(Math.abs(@sprite.body.velocity.x), Math.abs(@sprite.body.velocity.y)) * 2
 
         @sprite.bringToTop()
         
+        @gunCountdown = @gunCountdown - 1 if @gunCountdown > 0
+        if @gunCountdown == 0 and game.input.activePointer.isDown
+            @gunCountdown = 250
+            
+        @sprite.angle = @sprite.angle + Math.max(@gunCountdown, 220) / 2.0 - 110
     destroy: ->
