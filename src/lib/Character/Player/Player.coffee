@@ -1,7 +1,7 @@
 class Player extends GameObject
 
-    constructor: (x, y) ->
-        super()
+    constructor: (x, y, state) ->
+        super(state)
         cursors = game.input.keyboard.createCursorKeys()
 
         @controls = {}
@@ -17,6 +17,7 @@ class Player extends GameObject
         @WALKING_SPEED = 100
 
         @sprite = game.add.sprite x, y, "player"
+        @sprite.wrapper = @
         game.physics.arcade.enable(@sprite)
         @sprite.body.collideWorldBounds = true
         @sprite.anchor.x = .5
@@ -32,7 +33,7 @@ class Player extends GameObject
         loud = false
 
         # Die if you hit an alien
-        for k, v of GameObjects
+        for k, v of @state.GameObjects
             if v.type == 'alien'
                 game.physics.arcade.collide @sprite, v.sprite, @destroy, null, @
 
@@ -41,7 +42,7 @@ class Player extends GameObject
                 if (currSpeed - @WALKING_SPEED >= d/2)
                     loud = true
 
-        if loud then GameState.playerLocation = {x: @sprite.body.position.x, y: @sprite.body.position.y}
+        if loud then @state.GameState.playerLocation = {x: @sprite.body.position.x, y: @sprite.body.position.y}
 
         # reset acceleration to start
         @sprite.body.acceleration.x = 0
@@ -106,10 +107,10 @@ class Player extends GameObject
         @footstepCountdown = @footstepCountdown - Math.abs(@sprite.body.velocity.x) - Math.abs(@sprite.body.velocity.y)
         if @footstepCountdown < 0
             @footstepCountdown = 3000
-            new Circle @sprite.body.x + @sprite.body.width * @sprite.anchor.x, @sprite.body.y + @sprite.body.height * @sprite.anchor.y, Math.max(Math.abs(@sprite.body.velocity.x), Math.abs(@sprite.body.velocity.y)) * 2
+            new Circle @sprite.body.x + @sprite.body.width * @sprite.anchor.x, @sprite.body.y + @sprite.body.height * @sprite.anchor.y, Math.max(Math.abs(@sprite.body.velocity.x), Math.abs(@sprite.body.velocity.y)) * 2, @state
 
     _fire: ->
-        @gunCountdown = 250
+        @gunCountdown = 200
         angle = @sprite.angle
 
         angle *= Math.PI / 180.0
@@ -122,13 +123,11 @@ class Player extends GameObject
 
         bullet_angle = @sprite.angle + (Math.random()-0.5)*60
 
-        console.log @sprite.angle, bullet_angle
-
-        sound = new Circle source.x, source.y, 2000
+        sound = new Circle source.x, source.y, 2000, @state
 
         @sprite.angle = bullet_angle
-        bullet = new Bullet source.x, source.y, (bullet_angle * Math.PI/180 - Math.PI/2)
-        GameState.playerLocation = {x: source.x, y: source.y}
+        bullet = new Bullet source.x, source.y, (bullet_angle * Math.PI/180 - Math.PI/2), @state
+        @state.GameState.playerLocation = {x: source.x, y: source.y}
 
 
     destroy: ->

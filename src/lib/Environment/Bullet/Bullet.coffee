@@ -1,9 +1,10 @@
 class Bullet extends GameObject
 
-    constructor: (x, y, angle) ->
-        super()
+    constructor: (x, y, angle, state) ->
+        super(state)
         @type = 'bullet'
         @sprite = game.add.sprite x, y, "circle"
+        @sprite.wrapper = @
         @sprite.anchor.x = .5
         @sprite.anchor.y = .5
         @sprite.scale.setTo 0.03, 0.03
