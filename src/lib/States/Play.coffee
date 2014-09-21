@@ -9,5 +9,6 @@ Play.prototype = {
         @player = new Player 50, 50
 
     update: ->
-        @player.update()
+        for key, val of GameObjects
+            val.update()
 }
