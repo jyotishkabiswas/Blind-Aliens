@@ -134,8 +134,8 @@ class Player extends GameObject
         @sprite.angle = bullet_angle
         bullet = new Bullet source.x, source.y, (bullet_angle * Math.PI/180 - Math.PI/2), @state
         @state.GameState.playerLocation =
-            x: @sprite.body.x + @sprite.body.width * @sprite.anchor.x
-            y: @sprite.body.y + @sprite.body.height * @sprite.anchor.y
+            x: @sprite.body.x
+            y: @sprite.body.y
 
 
     destroy: ->
