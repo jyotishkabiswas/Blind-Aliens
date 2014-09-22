@@ -43,7 +43,7 @@ class Alien extends GameObject
         distance = Utils.dist @sprite.position, dest
         if distance < @sprite.width
             @state.GameState.playerLocation = null
-            return
+            @_randomWalk()
 
         dx = dest.x - @sprite.body.position.x
         dy = dest.y - @sprite.body.position.y

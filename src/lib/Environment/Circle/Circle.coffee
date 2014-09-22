@@ -1,21 +1,21 @@
 class Circle extends GameObject
 
-    constructor: (@x, @y, @r, state) ->
+    constructor: (x, y, @r, state) ->
         super(state)
-        @sprite = game.add.sprite @x, @y, "circle"
+        @sprite = game.add.sprite x, y, "circle"
         @sprite.anchor.x = .5
         @sprite.anchor.y = .5
         @sprite.width = 10
         @sprite.height = 10
-        @rad = @r
+        @r
         @sfx = game.add.audio "footstep"
         @sfx.play()
 
     update: ->
-        val = 3 + @sprite.width
+        val = 5 + @sprite.width
         @sprite.width = val
         @sprite.height = val
-        @sprite.alpha = 1.0 - val / @rad
+        @sprite.alpha = 0.3 * (1.0 - (val / @r))
         if @invalid()
             @destroy()
 
