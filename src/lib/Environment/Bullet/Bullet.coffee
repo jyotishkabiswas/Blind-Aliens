@@ -3,11 +3,10 @@ class Bullet extends GameObject
     constructor: (x, y, angle, state) ->
         super(state)
         @type = 'bullet'
-        @sprite = game.add.sprite x, y, "circle"
+        @sprite = game.add.sprite x, y, "bullet"
         @sprite.wrapper = @
         @sprite.anchor.x = .5
         @sprite.anchor.y = .5
-        @sprite.scale.setTo 0.03, 0.03
         game.physics.arcade.enable @sprite
         @sprite.body.checkWorldBounds = true
         @sprite.events.onOutOfBounds.add(@destroy, @)
