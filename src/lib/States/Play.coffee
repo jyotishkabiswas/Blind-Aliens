@@ -18,11 +18,10 @@ class Play
         @GameObjects = {}
         game.physics.startSystem Phaser.Physics.ARCADE
         game.add.sprite 0, 0, "background"
-
+        player = new Player 50, 50, @
+        
         for i in [1..3]
             alien = new Alien 150*i, 500, @
- 
-        player = new Player 50, 50, @
  
         game.add.sprite 0, 0, "side_shadows"
     update: ->
