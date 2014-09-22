@@ -55,3 +55,5 @@ class Alien extends GameObject
         @state.GameState.numAliens -= 1
         @sprite.destroy()
         super()
+        if @state.GameState.numAliens is 0
+            game.state.start("menu")

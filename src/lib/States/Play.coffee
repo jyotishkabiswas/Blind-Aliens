@@ -10,7 +10,9 @@ class Play
         game.load.audio "gunshot", "library/assets/gunshot.wav"
 
     create: ->
-        @GameState = {}
+        @GameState =
+            playerLocation: null
+            numAliens: 3
         @GameObjects = {}
         game.physics.startSystem Phaser.Physics.ARCADE
         game.add.sprite 0, 0, "background"
@@ -22,5 +24,3 @@ class Play
     update: ->
         for k, v of @GameObjects
             v.update()
-        if @GameState.numAliens is 0
-            game.state.start("menu")
