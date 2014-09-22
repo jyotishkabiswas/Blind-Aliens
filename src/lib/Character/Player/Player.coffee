@@ -110,8 +110,8 @@ class Player extends GameObject
 
     _updateShadow: ->
 
-        @shadow.body.velocity.x = 7 * (@sprite.x - (@shadow.x + @shadow.width/2))
-        @shadow.body.velocity.y = 7 * (@sprite.y - (@shadow.y + @shadow.height/2))
+        @shadow.body.velocity.x = 4 * (@sprite.x - (@shadow.x + @shadow.width/2))
+        @shadow.body.velocity.y = 4 * (@sprite.y - (@shadow.y + @shadow.height/2))
         @shadow.bringToTop()
 
     _footstep: ->
