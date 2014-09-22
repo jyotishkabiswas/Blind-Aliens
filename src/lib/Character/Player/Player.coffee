@@ -74,7 +74,7 @@ class Player extends GameObject
         @i = @i + 1
         dx = @sprite.body.x + @sprite.body.width * @sprite.anchor.x - game.input.mousePointer.x
         dy = @sprite.body.y + @sprite.body.height * @sprite.anchor.y - game.input.mousePointer.y
-        @sprite.angle = -100 + 180 * Math.atan2(dy, dx) / Math.PI + 15 * Math.sin(@i / 100.0)
+        @sprite.angle = -100 + 180 * Math.atan2(dy, dx) / Math.PI + 15 * Math.sin(@i / 100.0) + Math.max(170, @gunCountdown) - 170
 
         # move sprite forward so footstep circles don't obscure player
         @sprite.bringToTop()
