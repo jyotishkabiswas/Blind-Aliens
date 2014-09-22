@@ -127,12 +127,9 @@ class Player extends GameObject
             x: @sprite.body.x + @sprite.body.width * @sprite.anchor.x + r * Math.sin(angle)
             y: @sprite.body.y + @sprite.body.height * @sprite.anchor.y - r * Math.cos(angle)
 
-        bullet_angle = @sprite.angle + (Math.random()-0.5)*60
+        new Circle source.x, source.y, 2000, @state
 
-        sound = new Circle source.x, source.y, 2000, @state
-
-        @sprite.angle = bullet_angle
-        bullet = new Bullet source.x, source.y, (bullet_angle * Math.PI/180 - Math.PI/2), @state
+        new Bullet source.x, source.y, (@sprite.angle * Math.PI/180 - Math.PI/2), @state
         @state.GameState.playerLocation =
             x: @sprite.body.x
             y: @sprite.body.y
