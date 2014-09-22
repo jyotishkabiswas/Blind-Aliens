@@ -25,6 +25,7 @@ class Player extends GameObject
         @i = 0
         @footstepCountdown = 3000
         @gunCountdown = 0
+        @footstep = game.add.audio "footstep"
 
         @shadow = game.add.sprite x-game.width, y-game.height, "shadowmask"
         game.physics.arcade.enable @shadow
@@ -118,7 +119,8 @@ class Player extends GameObject
         @footstepCountdown = @footstepCountdown - Math.abs(@sprite.body.velocity.x) - Math.abs(@sprite.body.velocity.y)
         if @footstepCountdown < 0
             @footstepCountdown = 3000
-            new Circle @sprite.body.x + @sprite.body.width * @sprite.anchor.x, @sprite.body.y + @sprite.body.height * @sprite.anchor.y, Math.max(Math.abs(@sprite.body.velocity.x), Math.abs(@sprite.body.velocity.y)) * 2, @state
+            new Circle @sprite.body.x + @sprite.body.width * @sprite.anchor.x, @sprite.body.y + @sprite.body.height * @sprite.anchor.y, Math.max(Math.abs(@sprite.body.velocity.x), Math.abs(@sprite.body.velocity.y)) * 1.1, @state
+            @footstep.play()
 
     _fire: ->
         @gunCountdown = 200
