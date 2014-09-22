@@ -18,7 +18,7 @@ class Player extends GameObject
 
         @sprite = game.add.sprite x, y, "player"
         @sprite.wrapper = @
-        game.physics.arcade.enable(@sprite)
+        game.physics.arcade.enable @sprite
         @sprite.body.collideWorldBounds = true
         @sprite.anchor.x = .5
         @sprite.anchor.y = .75
@@ -27,12 +27,11 @@ class Player extends GameObject
         @gunCountdown = 0
 
         @shadow = game.add.sprite x-game.width, y-game.height, "shadowmask"
+        game.physics.arcade.enable @shadow
 
     update: ->
 
-        @shadow.x = @sprite.x - 800
-        @shadow.y = @sprite.y - 600
-        @shadow.bringToTop()
+        @_updateShadow()
 
         currSpeed = Utils.dist(@sprite.body.velocity, {x: 0, y: 0})
 
@@ -107,6 +106,12 @@ class Player extends GameObject
             @sprite.body.y = @sprite.body.y - y + game.height - 20
             @sprite.body.velocity.y = 0
             @sprite.body.acceleration.y = 0
+
+    _updateShadow: ->
+
+        @shadow.body.velocity.x = 7 * (@sprite.x - (@shadow.x + @shadow.width/2))
+        @shadow.body.velocity.y = 7 * (@sprite.y - (@shadow.y + @shadow.height/2))
+        @shadow.bringToTop()
 
     _footstep: ->
         # create footstep sounds every once in a while
