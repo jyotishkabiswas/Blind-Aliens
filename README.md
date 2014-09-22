@@ -1,10 +1,10 @@
-# Phaser JS Boilerplate v0.1.3
+# Blind Aliens
 
-Automated workflow to [Phaser](https://github.com/photonstorm/phaser) Game Development (based on [FireShell](http://getfireshell.com/)).
+Arena-style stealth/strategy game built with [Phaser](https://github.com/photonstorm/phaser).
 
 ## Jump start
 
-Get started with Phaser-Boilerplate:
+Get started with Blind Aliens:
 
 1. Download and Install [NodeJS](http://nodejs.org/).
 2. Install Ruby and Compass.
