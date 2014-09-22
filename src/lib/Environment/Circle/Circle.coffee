@@ -8,11 +8,9 @@ class Circle extends GameObject
         @sprite.width = 10
         @sprite.height = 10
         @r
-        @sfx = game.add.audio "footstep"
-        @sfx.play()
 
     update: ->
-        val = 5 + @sprite.width
+        val = 1.06 * @sprite.width
         @sprite.width = val
         @sprite.height = val
         @sprite.alpha = 0.3 * (1.0 - (val / @r))
