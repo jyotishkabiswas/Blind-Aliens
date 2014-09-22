@@ -9,6 +9,8 @@ class Alien extends GameObject
         @sprite.wrapper = @
         @sprite.scale.setTo 0.3, 0.3
         game.physics.arcade.enable @sprite
+        @sprite.animations.add "crawl"
+        @sprite.play "crawl", 8, true
         @sprite.body.collideWorldBounds = true
         @sprite.anchor.setTo 0.5,0.5
 
