@@ -5,7 +5,7 @@ class Alien extends GameObject
         @type = 'alien'
         @MAX_SPEED = 200
         @MAX_ACCELERATION = 500
-        @sprite = game.add.sprite x, y, "circle"
+        @sprite = game.add.sprite x, y, "enemy"
         @sprite.wrapper = @
         @sprite.scale.setTo 0.3, 0.3
         game.physics.arcade.enable @sprite
@@ -36,6 +36,7 @@ class Alien extends GameObject
         @sprite.body.acceleration.x = @MAX_ACCELERATION*0.5*Math.cos(d_theta)
         @sprite.body.acceleration.y = @MAX_ACCELERATION*0.5*Math.sin(d_theta)
 
+
     _awareWalk: ->
 
         dest = @state.GameState.playerLocation
@@ -46,8 +47,6 @@ class Alien extends GameObject
 
         dx = dest.x - @sprite.body.position.x
         dy = dest.y - @sprite.body.position.y
-
-        angle = (dx*dx + dy*dy)/(@MAX_SPEED*@MAX_SPEED)
 
         @sprite.body.velocity.x = @MAX_SPEED*dx/distance
         @sprite.body.velocity.y = @MAX_SPEED*dy/distance

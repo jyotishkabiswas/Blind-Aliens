@@ -26,7 +26,13 @@ class Player extends GameObject
         @footstepCountdown = 3000
         @gunCountdown = 0
 
+        @shadow = game.add.sprite x-game.width, y-game.height, "shadowmask"
+
     update: ->
+
+        @shadow.x = @sprite.x - 800
+        @shadow.y = @sprite.y - 600
+        @shadow.bringToTop()
 
         currSpeed = Utils.dist(@sprite.body.velocity, {x: 0, y: 0})
 
@@ -127,7 +133,9 @@ class Player extends GameObject
 
         @sprite.angle = bullet_angle
         bullet = new Bullet source.x, source.y, (bullet_angle * Math.PI/180 - Math.PI/2), @state
-        @state.GameState.playerLocation = {x: source.x, y: source.y}
+        @state.GameState.playerLocation =
+            x: @sprite.body.x + @sprite.body.width * @sprite.anchor.x
+            y: @sprite.body.y + @sprite.body.height * @sprite.anchor.y
 
 
     destroy: ->
