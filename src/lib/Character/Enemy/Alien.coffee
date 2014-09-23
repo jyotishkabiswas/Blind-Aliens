@@ -28,7 +28,6 @@ class Alien extends GameObject
             @_randomWalk()
 
     _hitByBullet: (a, b) ->
-        @state.score = @state.score + @SCORE_VALUE
         a.wrapper.destroy()
         b.wrapper.destroy()
 
@@ -58,6 +57,7 @@ class Alien extends GameObject
     destroy: ->
         @state.GameState.numAliens -= 1
         @sprite.destroy()
+        @state.score = @state.score + @SCORE_VALUE
         super()
         if @state.GameState.numAliens is 0
             game.state.start("menu")
