@@ -5,6 +5,7 @@ class Alien extends GameObject
         @type = 'alien'
         @MAX_SPEED = 200
         @MAX_ACCELERATION = 500
+        @SCORE_VALUE = 1000
         @sprite = game.add.sprite x, y, "enemy"
         @sprite.wrapper = @
         @sprite.scale.setTo 0.3, 0.3
@@ -27,6 +28,7 @@ class Alien extends GameObject
             @_randomWalk()
 
     _hitByBullet: (a, b) ->
+        @state.score = @state.score + @SCORE_VALUE
         a.wrapper.destroy()
         b.wrapper.destroy()
 

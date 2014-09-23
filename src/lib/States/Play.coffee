@@ -24,6 +24,12 @@ class Play
             alien = new Alien 150*i, 500, @
  
         game.add.sprite 0, 0, "side_shadows"
+        @score = 0
+        @scoreboard = game.add.text 16, 16, '0', { fontSize: '32px', fill: '#FFF'}
+
     update: ->
+        @score = @score + 1
+        @scoreboard.text = @score.toString()
+        
         for k, v of @GameObjects
             v.update()
