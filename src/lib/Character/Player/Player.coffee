@@ -19,13 +19,13 @@ class Player extends GameObject
         @sprite = game.add.sprite x, y, "player"
         @sprite.wrapper = @
         game.physics.arcade.enable @sprite
-        @sprite.body.collideWorldBounds = true
         @sprite.anchor.x = .5
         @sprite.anchor.y = .75
         @i = 0
         @footstepCountdown = 3000
         @gunCountdown = 0
         @footstep = game.add.audio "footstep"
+        @gun = game.add.audio "gunshot"
 
         @shadow = game.add.sprite x-game.width, y-game.height, "shadowmask"
         game.physics.arcade.enable @shadow
@@ -124,6 +124,7 @@ class Player extends GameObject
 
     _fire: ->
         @gunCountdown = 200
+        @gun.play()
         angle = @sprite.angle
 
         angle *= Math.PI / 180.0

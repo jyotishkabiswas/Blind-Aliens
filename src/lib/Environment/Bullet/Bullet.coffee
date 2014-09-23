@@ -18,13 +18,10 @@ class Bullet extends GameObject
             y: @BULLET_SPEED * Math.sin(angle)
 
         @sprite.body.velocity = velocity
-        @sfx = game.add.audio "gunshot"
-        @sfx.play()
 
     update: ->
         @sprite.bringToTop()
 
     destroy: ->
         @sprite.destroy()
-        @sfx.destroy()
         super()
