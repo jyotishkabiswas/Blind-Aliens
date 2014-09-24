@@ -16,16 +16,20 @@ class Play
             playerLocation: null
             numAliens: 3
         @GameObjects = {}
+        @sprites = game.add.group()
+        @hud = game.add.group()
         game.physics.startSystem Phaser.Physics.ARCADE
-        game.add.sprite 0, 0, "background"
+        @sprites.create 0, 0, "background"
+
         player = new Player 50, 50, @
         
         for i in [1..3]
             alien = new Alien 150*i, 500, @
  
-        game.add.sprite 0, 0, "side_shadows"
+        @sprites.create 0, 0, "side_shadows"
         @score = 0
         @scoreboard = game.add.text 16, 16, '0', { fontSize: '32px', fill: '#FFF'}
+        @hud.add(@scoreboard)
 
     update: ->
         @score = @score + 1
@@ -33,3 +37,4 @@ class Play
         
         for k, v of @GameObjects
             v.update()
+
