@@ -187,9 +187,11 @@ class Alien extends GameObject
     hear: (noisex, noisey, vol) ->
         x = @sprite.body.x + @sprite.width / 2
         y = @sprite.body.y + @sprite.height / 2
-        if (x - noisex) * (x - noisex) + (y - noisey) * (y - noisey) <= vol * vol
-            @locationx = noisex + Math.random() * 200 - 100
-            @locationy = noisey + Math.random() * 200 - 100
+        dsq = (x - noisex) * (x - noisex) + (y - noisey) * (y - noisey)
+        if dsq <= vol * vol
+            signal_noise = Math.sqrt(dsq) / 10
+            @locationx = noisex + Math.random() * 2 * signal_noise - signal_noise
+            @locationy = noisey + Math.random() * 2 * signal_noise - signal_noise
             @locationNotTouched = 1
             @soundCountdown = 5000
 

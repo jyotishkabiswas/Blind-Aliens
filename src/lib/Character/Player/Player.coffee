@@ -50,7 +50,7 @@ class Player extends GameObject
             	d = Math.sqrt(
             			Math.pow(@sprite.body.x + @sprite.body.width  * @sprite.anchor.x - v.sprite.body.x - v.sprite.body.width  * 0.5, 2) +
             			Math.pow(@sprite.body.y + @sprite.body.height * @sprite.anchor.y - v.sprite.body.y - v.sprite.body.height * 0.5, 2))
-            	if d < 80
+            	if d < 70
             		@destroy()
 
 
