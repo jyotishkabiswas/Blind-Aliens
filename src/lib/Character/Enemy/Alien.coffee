@@ -126,6 +126,7 @@ class Alien extends GameObject
             xComponent = Math.sin (@sprite.angle * Math.PI / 180)
             yComponent = Math.cos (@sprite.angle * Math.PI / 180)
             # the alien is slower if already half dead
+            multiplier = if @alive == 2 then 2 else 1.7
             @sprite.body.velocity.x = @dr * xComponent * 100 * @alive
             @sprite.body.velocity.y = -@dr * yComponent * 100 * @alive
         # start a new action
@@ -136,13 +137,13 @@ class Alien extends GameObject
             # the null hypothesis is that we want random motion for random duration
             # each move is either rotation or forward motion
             @moveCountdown = Math.random() * 20 + 15
-            @dtheta = if Math.random() > .15 then Math.random() * 4 - 2 else 0
+            @dtheta = if Math.random() > .33 then Math.random() * 4 - 2 else 0
             @dr = if @dtheta == 0 then 0.8 + Math.random() * .2 else 0
 
             # if the alien is too close to the edge, turn back
             x = @sprite.body.x + @sprite.width / 2
             y = @sprite.body.y + @sprite.height / 2
-            if (x < 100 or y < 100 or x > game.width - 100 or y > game.height - 100) and (@returnQuantity > 0 or @soundCountdown > 0)
+            if (x < 0 or y < 0 or x > game.width or y > game.height) and (@returnQuantity > 0 or @soundCountdown > 0)
                 # if the alien knows you are there, he won't stop turning back
                 # if he doesn't, he might leave after some number of tries
                 @returnQuantity += if @soundCountdown == 0 then -1 else 1

@@ -13,23 +13,40 @@ class Play
 
     create: ->
         @GameState =
-            playerLocation: null
-            numAliens: 3
+            numAliens: 0
         @GameObjects = {}
         game.physics.startSystem Phaser.Physics.ARCADE
         game.add.sprite 0, 0, "background"
-        player = new Player 50, 50, @
+        player = new Player game.width / 2, game.height / 2, @
         
-        for i in [1..3]
-            alien = new Alien 150*i, 500, @
+        for i in [1..2]
+            @newAlien()
  
         game.add.sprite 0, 0, "side_shadows"
         @score = 0
         @scoreboard = game.add.text 16, 16, '0', { fontSize: '32px', fill: '#FFF'}
 
+    newAlien: ->
+        v = Math.random() * 2 * (game.width + game.height)
+        if v < game.width
+            x = v
+            y = -40
+        else if v < 2 * game.width
+            x = v - game.width
+            y = 40 + game.height
+        else if v < 2 * game.width + game.height
+            y = v - 2 * game.width
+            x = -40
+        else
+            y = v - (2 * game.width + game.height)
+            x = 40 + game.width
+        new Alien x, y, @
+        @GameState.numAliens += 1
+
     update: ->
         @score = @score + 1
         @scoreboard.text = @score.toString()
-        
+        if (@GameState.numAliens < 2 and Math.random() < 0.03) or (@score % 1000 == 0 and @GameState.numAliens < 4)
+            @newAlien()
         for k, v of @GameObjects
             v.update()
