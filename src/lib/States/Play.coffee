@@ -53,7 +53,7 @@ class Play
             @scoreboard.text = @score.toString()
 
         @count = @count + 1    
-        if (@GameState.numAliens < 2 and Math.random() < 0.03) or (@score % 1000 == 0 and @GameState.numAliens < 4)
+        if (@GameState.numAliens < 2 and Math.random() < 0.03) or (@count % 1000 == 0 and @GameState.numAliens < 4)
             @newAlien()
 
         for k, v of @GameObjects
