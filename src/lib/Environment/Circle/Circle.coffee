@@ -8,6 +8,8 @@ class Circle extends GameObject
         @sprite.width = 10
         @sprite.height = 10
         @r
+        for k, v of state.GameObjects
+            v.hear(x, y, @r) if v.type == 'alien'
 
     update: ->
         val = 1.06 * @sprite.width

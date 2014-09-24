@@ -43,12 +43,6 @@ class Player extends GameObject
             if v.type == 'alien'
                 game.physics.arcade.collide @sprite, v.sprite, @destroy, null, @
 
-                # You're being loud if you're too close to an alien and moving too fast
-                d = Utils.dist v.sprite.body.position, @sprite.body.position
-                if (currSpeed - @WALKING_SPEED >= d/2)
-                    loud = true
-
-        if loud then @state.GameState.playerLocation = {x: @sprite.body.position.x, y: @sprite.body.position.y}
 
         # reset acceleration to start
         @sprite.body.acceleration.x = 0
@@ -119,7 +113,7 @@ class Player extends GameObject
         @footstepCountdown = @footstepCountdown - Math.abs(@sprite.body.velocity.x) - Math.abs(@sprite.body.velocity.y)
         if @footstepCountdown < 0
             @footstepCountdown = 3000
-            new Circle @sprite.body.x + @sprite.body.width * @sprite.anchor.x, @sprite.body.y + @sprite.body.height * @sprite.anchor.y, Math.max(Math.abs(@sprite.body.velocity.x), Math.abs(@sprite.body.velocity.y)) * 1.1, @state
+            new Circle @sprite.body.x + @sprite.body.width * @sprite.anchor.x, @sprite.body.y + @sprite.body.height * @sprite.anchor.y, Math.max(Math.abs(@sprite.body.velocity.x), Math.abs(@sprite.body.velocity.y)) * 2, @state
             @footstep.play()
 
     _fire: ->
@@ -138,9 +132,6 @@ class Player extends GameObject
         new Circle source.x, source.y, 2000, @state
 
         new Bullet source.x, source.y, (@sprite.angle * Math.PI/180 - Math.PI/2), @state
-        @state.GameState.playerLocation =
-            x: @sprite.body.x
-            y: @sprite.body.y
 
 
     destroy: ->
