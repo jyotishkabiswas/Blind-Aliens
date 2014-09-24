@@ -10,6 +10,7 @@ class Alien extends GameObject
 
         #various sprite details
         @sprite = game.add.sprite x, y, "enemy"
+        @state.sprites.add(@sprite)
         @sprite.wrapper = @
         @sprite.scale.setTo 0.3, 0.3
         game.physics.arcade.enable @sprite
