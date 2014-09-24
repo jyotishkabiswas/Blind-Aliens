@@ -28,12 +28,17 @@ class Play
  
         @sprites.create 0, 0, "side_shadows"
         @score = 0
+        @count = 0
         @scoreboard = game.add.text 16, 16, '0', { fontSize: '32px', fill: '#FFF'}
+
         @hud.add(@scoreboard)
 
     update: ->
-        @score = @score + 1
-        @scoreboard.text = @score.toString()
+        if 0 ==  @count % 20 
+            @score = @score + 1
+            @scoreboard.text = @score.toString()
+
+        @count = @count + 1
         
         for k, v of @GameObjects
             v.update()

@@ -17,6 +17,7 @@ class Player extends GameObject
         @WALKING_SPEED = 100
 
         @sprite = game.add.sprite x, y, "player"
+        @state.sprites.add(@sprite)
         @sprite.wrapper = @
         game.physics.arcade.enable @sprite
         @sprite.anchor.x = .5
@@ -28,7 +29,12 @@ class Player extends GameObject
         @gun = game.add.audio "gunshot"
 
         @shadow = game.add.sprite x-game.width, y-game.height, "shadowmask"
+        @state.sprites.add(@shadow)
         game.physics.arcade.enable @shadow
+
+        @reload = game.add.text 650, 16, 'reloading', { fontSize: '32px', fill: '#FFF'}
+        @reload.visible = true
+        @state.hud.add(@reload)
 
     update: ->
 
@@ -83,6 +89,13 @@ class Player extends GameObject
 
         # fire if the gun hasn't been used too recently
         @gunCountdown = @gunCountdown - 1 if @gunCountdown > 0
+
+        # toggle reloading warning while reloading gun
+        if @gunCountdown == 0
+            @reload.visible = false
+        else if 0 == @state.count % 20
+            @reload.visible = not @reload.visible
+
         if @gunCountdown == 0 and game.input.activePointer.isDown
             @_fire()
 
