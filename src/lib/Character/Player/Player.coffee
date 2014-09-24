@@ -56,7 +56,7 @@ class Player extends GameObject
                     x: @sprite.body.x + @sprite.body.width * @sprite.anchor.x + r * Math.sin(angle)
                     y: @sprite.body.y + @sprite.body.height * @sprite.anchor.y - r * Math.cos(angle)
                 d2 = Math.sqrt(Math.pow(gunLocation.x - v.sprite.body.x - v.sprite.body.width  * 0.5, 2) + Math.pow(gunLocation.y - v.sprite.body.y - v.sprite.body.height * 0.5, 2))
-                if (d < 70 or d2 < 55) and v.alive > 0
+                if (d < 70 or d2 < 45) and v.alive > 0
                     @destroy()
 
 
