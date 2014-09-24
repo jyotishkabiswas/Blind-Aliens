@@ -47,11 +47,9 @@ class Player extends GameObject
         # Die if you hit an alien
         for k, v of @state.GameObjects
             if v.type == 'alien'
-            	d = Math.sqrt(
-            			Math.pow(@sprite.body.x + @sprite.body.width  * @sprite.anchor.x - v.sprite.body.x - v.sprite.body.width  * 0.5, 2) +
-            			Math.pow(@sprite.body.y + @sprite.body.height * @sprite.anchor.y - v.sprite.body.y - v.sprite.body.height * 0.5, 2))
-            	if d < 70
-            		@destroy()
+                d = Math.sqrt(Math.pow(@sprite.body.x + @sprite.body.width  * @sprite.anchor.x - v.sprite.body.x - v.sprite.body.width  * 0.5, 2) + Math.pow(@sprite.body.y + @sprite.body.height * @sprite.anchor.y - v.sprite.body.y - v.sprite.body.height * 0.5, 2))
+                if d < 70 and v.alive > 0
+                    @destroy()
 
 
         # reset acceleration to start

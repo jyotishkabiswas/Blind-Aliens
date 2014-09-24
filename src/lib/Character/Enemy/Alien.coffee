@@ -6,7 +6,7 @@ class Alien extends GameObject
         @type = 'alien'
 
         #unclear whether we use score right now, but it's in here
-        @SCORE_VALUE = 1000
+        @SCORE_VALUE = 200
 
         #various sprite details
         @sprite = game.add.sprite x, y, "enemy"
