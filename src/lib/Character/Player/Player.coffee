@@ -17,7 +17,7 @@ class Player extends GameObject
         @WALKING_SPEED = 100
 
         @sprite = game.add.sprite x, y, "player"
-        @state.sprites.add(@sprite)
+        @state.backdropPlayer.add(@sprite)
         @sprite.wrapper = @
         game.physics.arcade.enable @sprite
         @sprite.anchor.x = .5
@@ -29,7 +29,7 @@ class Player extends GameObject
         @gun = game.add.audio "gunshot"
 
         @shadow = game.add.sprite x-game.width, y-game.height, "shadowmask"
-        @state.sprites.add(@shadow)
+        @state.shadows.add(@shadow)
         game.physics.arcade.enable @shadow
 
         @reload = game.add.text 650, 16, 'reloading', { fontSize: '32px', fill: '#FFF'}
