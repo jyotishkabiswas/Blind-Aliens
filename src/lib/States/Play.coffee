@@ -1,10 +1,7 @@
 class Play
 
-    pauseText = null
-
     preload: ->
         game.load.image "shadowmask", "library/assets/shadowmask.png"
-        game.load.image "background", "library/assets/background.png"
         game.load.image "side_shadows", "library/assets/side_shadows.png"
         game.load.image "player", "library/assets/player.png"
         game.load.image "circle", "library/assets/circle.png"
@@ -87,9 +84,22 @@ class Play
 
         for k, v of @GameObjects
             v.update()
-    destroy: ->
-        game.input.keyboard.onDownCallback = null
 
+    drawCircles: (obj) ->
+        for circle in Physics.calculateCircles(obj)
+            game.debug.geom(
+                new Phaser.Circle(circle.x, circle.y, 2*circle.radius),
+                '#ffffff',
+                false)
+        return
+
+    render: ->
+        if game.state.current == "play" && debugging == true
+            @aliens.forEach (alien) =>
+                @drawCircles alien
+            @drawCircles @player.sprite
+        return
+        
     pauseOrResume: ->
         if game.state.current == "play" && game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)
             if !(@lastClick?) || game.time.now - @lastClick > 50

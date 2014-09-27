@@ -19,6 +19,9 @@ class Alien extends GameObject
         @crawl = @sprite.play "crawl", 8, true
         @sprite.anchor.setTo 0.5,0.5
         @sprite.alpha = 1
+        @sprite.physicsBody = [
+            {x: 0.5, y: 0.5, radius: 125}
+        ]
 
         # of lives left for this alien
         @alive = big + 2

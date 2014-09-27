@@ -24,6 +24,11 @@ class Player extends GameObject
         game.physics.arcade.enable @sprite
         @sprite.anchor.x = .5
         @sprite.anchor.y = .75
+        @sprite.physicsBody = [
+        	{x: 0.5, y: 0.7, radius: 27},
+        	{x: 0.8, y: 0, radius: 3},
+        	{x: 0.8, y: 0.3, radius: 3}
+        ]
         @i = 0
         @footstepCountdown = 1500
         @gunCountdown = 0
@@ -48,18 +53,8 @@ class Player extends GameObject
         # Die if you hit an alien
         for k, v of @state.GameObjects
             if v.type == 'alien'
-                d = Math.sqrt(Math.pow(@sprite.body.x + @sprite.body.width  * @sprite.anchor.x - v.sprite.body.x - v.sprite.body.width  * 0.5, 2) + Math.pow(@sprite.body.y + @sprite.body.height * @sprite.anchor.y - v.sprite.body.y - v.sprite.body.height * 0.5, 2))
-                angle = @sprite.angle
-                angle *= Math.PI / 180.0
-                angle += Math.atan(.5 * @sprite.body.width / (.75 * @sprite.body.height))
-                r = Math.sqrt(Math.pow(.5 * @sprite.body.width, 2) + Math.pow(.75 * @sprite.body.height, 2))
-                gunLocation =
-                    x: @sprite.body.x + @sprite.body.width * @sprite.anchor.x + r * Math.sin(angle)
-                    y: @sprite.body.y + @sprite.body.height * @sprite.anchor.y - r * Math.cos(angle)
-                d2 = Math.sqrt(Math.pow(gunLocation.x - v.sprite.body.x - v.sprite.body.width  * 0.5, 2) + Math.pow(gunLocation.y - v.sprite.body.y - v.sprite.body.height * 0.5, 2))
-                mult = Math.pow(1.8, v.big)
-                if (d < 35 * mult or d2 < 22.5 * mult) and v.alive > 0
-                    @destroy()
+            	if Physics.collides @sprite, v.sprite
+            		@destroy()
 
             if v.type == 'ammo'
                 game.physics.arcade.overlap(@sprite,v.sprite,@_collectAmmo, null, this)
@@ -169,4 +164,4 @@ class Player extends GameObject
 
     destroy: ->
         super()
-        game.state.start "menu"
+        game.state.start "game_over"
