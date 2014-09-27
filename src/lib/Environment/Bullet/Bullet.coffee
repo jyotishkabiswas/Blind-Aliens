@@ -7,6 +7,8 @@ class Bullet extends GameObject
         @sprite.wrapper = @
         @sprite.anchor.x = .5
         @sprite.anchor.y = .5
+        @sprite.scale.setTo 0.4, 0.4
+        @sprite.tint = 0xffffff
         game.physics.arcade.enable @sprite
         @sprite.body.checkWorldBounds = true
         @sprite.events.onOutOfBounds.add(@destroy, @)

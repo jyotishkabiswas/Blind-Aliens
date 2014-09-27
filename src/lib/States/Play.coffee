@@ -43,7 +43,9 @@ class Play
         Play.pauseText.anchor.setTo 0.5, 0.5
         game.input.keyboard.onDownCallback = @pauseOrResume
         return
-    newAlien: ->
+
+
+    newAlien: (big) ->
         v = Math.random() * 2 * (game.width + game.height)
         if v < game.width
             x = v
@@ -57,7 +59,7 @@ class Play
         else
             y = v - (2 * game.width + game.height)
             x = 40 + game.width
-        new Alien x, y, @
+        new Alien x, y, @, big
         @GameState.numAliens += 1
 
     newAmmoBox: ->
@@ -78,10 +80,11 @@ class Play
 
         @count = @count + 1
 
-        minAliens = @score / 400
-        maxAliens = @score / 200
+        minAliens = @score / 400 + 2
+        maxAliens = @score / 200 + 2
         if (@GameState.numAliens < minAliens and Math.random() < 0.03) or (Math.random() < 0.0005 and @GameState.numAliens < maxAliens)
-            @newAlien()
+            big = Math.round ((Math.random() * @score / 1000)) 
+            @newAlien(big)
 
         for k, v of @GameObjects
             v.update()
