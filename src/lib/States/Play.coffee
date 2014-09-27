@@ -17,6 +17,7 @@ class Play
     create: ->
         @GameState =
             numAliens: 0
+            numAmmoBoxes: 0
         @GameObjects = {}
         @backdropPlayer = game.add.group()
         @aliens = game.add.group()
@@ -30,7 +31,7 @@ class Play
         @shadows.create 0, 0, "side_shadows"
         @score = 0
         @count = 0
-        @scoreboard = game.add.text 16, 16, '0', { fontSize: '32px', fill: '#FFF'}
+        @scoreboard = game.add.text 16, 16, 'Score: 0', { fontSize: '32px', fill: '#FFF'}
         @hud.add(@scoreboard)
 
         Play.pauseText = game.add.text(
@@ -59,10 +60,21 @@ class Play
         new Alien x, y, @
         @GameState.numAliens += 1
 
+    newAmmoBox: ->
+        x = Math.random() * game.width
+        y = Math.random() * game.height
+ 
+        new AmmoBox x, y, @
+        @GameState.numAmmoBoxes += 1
+
     update: ->
         if 0 ==  @count % 20 
             @score = @score + 1
-            @scoreboard.text = @score.toString()
+            @scoreboard.text = "Score: " + @score.toString()
+
+        if 0 == @count % 100
+            if @GameState.numAmmoBoxes < 5
+                @newAmmoBox()
 
         @count = @count + 1
 

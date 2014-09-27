@@ -15,4 +15,5 @@ class AmmoBox extends GameObject
 
     destroy: ->
         @sprite.destroy()
+        @state.GameState.numAmmoBoxes -= 1
         super()

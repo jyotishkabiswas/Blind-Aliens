@@ -13,6 +13,7 @@ class Player extends GameObject
         @controls.A = game.input.keyboard.addKey Phaser.Keyboard.A
         @controls.S = game.input.keyboard.addKey Phaser.Keyboard.S
         @controls.D = game.input.keyboard.addKey Phaser.Keyboard.D
+        @bullets = 5
 
         @WALKING_SPEED = 100
 
@@ -141,24 +142,28 @@ class Player extends GameObject
             @footstep.play()
 
     _fire: ->
-        @gunCountdown = 200
-        @gun.play()
-        angle = @sprite.angle
+        if @bullets > 0
+            @gunCountdown = 50
+            @gun.play()
+            angle = @sprite.angle
 
-        angle *= Math.PI / 180.0
-        angle += Math.atan(.5 * @sprite.body.width / (.75 * @sprite.body.height))
+            angle *= Math.PI / 180.0
+            angle += Math.atan(.5 * @sprite.body.width / (.75 * @sprite.body.height))
 
-        r = Math.sqrt(Math.pow(.5 * @sprite.body.width, 2) + Math.pow(.75 * @sprite.body.height, 2))
-        source =
-            x: @sprite.body.x + @sprite.body.width * @sprite.anchor.x + r * Math.sin(angle)
-            y: @sprite.body.y + @sprite.body.height * @sprite.anchor.y - r * Math.cos(angle)
+            r = Math.sqrt(Math.pow(.5 * @sprite.body.width, 2) + Math.pow(.75 * @sprite.body.height, 2))
+            source =
+                x: @sprite.body.x + @sprite.body.width * @sprite.anchor.x + r * Math.sin(angle)
+                y: @sprite.body.y + @sprite.body.height * @sprite.anchor.y - r * Math.cos(angle)
 
-        new Circle source.x, source.y, 2000, @state
+            new Circle source.x, source.y, 2000, @state
 
-        new Bullet source.x, source.y, (@sprite.angle * Math.PI/180 - Math.PI/2), @state
+            new Bullet source.x, source.y, (@sprite.angle * Math.PI/180 - Math.PI/2), @state
+            @bullets -= 1
 
     _collectAmmo: (player, ammo) ->
         ammo.wrapper.destroy()
+        @bullets += 5
+
 
     destroy: ->
         super()
