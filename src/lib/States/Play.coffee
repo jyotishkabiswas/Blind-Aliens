@@ -9,6 +9,7 @@ class Play
         game.load.image "player", "library/assets/player.png"
         game.load.image "circle", "library/assets/circle.png"
         game.load.image "bullet", "library/assets/bullet.png"
+        game.load.image "ammo", "library/assets/ammo.png"
         game.load.spritesheet "enemy", "library/assets/alien_spreadsheet_350_402.png", 350, 402, 4
         game.load.audio "footstep", "library/assets/footstep.m4a"
         game.load.audio "gunshot", "library/assets/gunshot.wav"
@@ -25,7 +26,7 @@ class Play
         @backdropPlayer.create 0, 0, "background"
         player = new Player game.width / 2, game.height / 2, @
         
- 
+        ammo = new AmmoBox 100, 100, @
         @shadows.create 0, 0, "side_shadows"
         @score = 0
         @count = 0

@@ -43,7 +43,6 @@ class Player extends GameObject
         currSpeed = Utils.dist(@sprite.body.velocity, {x: 0, y: 0})
 
         loud = false
-
         # Die if you hit an alien
         for k, v of @state.GameObjects
             if v.type == 'alien'
@@ -59,6 +58,8 @@ class Player extends GameObject
                 if (d < 70 or d2 < 45) and v.alive > 0
                     @destroy()
 
+            if v.type == 'ammo'
+                game.physics.arcade.overlap(@sprite,v.sprite,@_collectAmmo, null, this)
 
         # reset acceleration to start
         @sprite.body.acceleration.x = 0
@@ -155,6 +156,9 @@ class Player extends GameObject
         new Circle source.x, source.y, 2000, @state
 
         new Bullet source.x, source.y, (@sprite.angle * Math.PI/180 - Math.PI/2), @state
+
+    _collectAmmo: (player, ammo) ->
+        ammo.wrapper.destroy()
 
     destroy: ->
         super()
