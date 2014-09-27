@@ -164,7 +164,7 @@ class Player extends GameObject
 
     _collectAmmo: (player, ammo) ->
         ammo.wrapper.destroy()
-        @bullets += 5
+        @bullets = Math.min 10, @bullets + 2
 
 
     destroy: ->

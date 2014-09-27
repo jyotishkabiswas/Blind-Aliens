@@ -25,13 +25,12 @@ class Play
         @hud = game.add.group()
         game.physics.startSystem Phaser.Physics.ARCADE
         @backdropPlayer.create 0, 0, "background"
-        player = new Player game.width / 2, game.height / 2, @
+        @player = new Player game.width / 2, game.height / 2, @
         
-        ammo = new AmmoBox 100, 100, @
         @shadows.create 0, 0, "side_shadows"
         @score = 0
         @count = 0
-        @scoreboard = game.add.text 16, 16, 'Score: 0', { fontSize: '32px', fill: '#FFF'}
+        @scoreboard = game.add.text 16, 16, 'Score: 0\nAmmo: 5', { fontSize: '32px', fill: '#FFF'}
         @hud.add(@scoreboard)
 
         Play.pauseText = game.add.text(
@@ -72,10 +71,10 @@ class Play
     update: ->
         if 0 ==  @count % 20 
             @score = @score + 1
-            @scoreboard.text = "Score: " + @score.toString()
+        @scoreboard.text = "Score: " + @score.toString() + "\nAmmo: " + @player.bullets.toString()
 
         if 0 == @count % 100
-            if @GameState.numAmmoBoxes < 5
+            if @GameState.numAmmoBoxes < 1
                 @newAmmoBox()
 
         @count = @count + 1
@@ -83,7 +82,7 @@ class Play
         minAliens = @score / 400 + 2
         maxAliens = @score / 200 + 2
         if (@GameState.numAliens < minAliens and Math.random() < 0.03) or (Math.random() < 0.0005 and @GameState.numAliens < maxAliens)
-            big = Math.round ((Math.random() * @score / 1000)) 
+            big = Math.floor ((Math.random() * @score / 1500)) 
             @newAlien(big)
 
         for k, v of @GameObjects
