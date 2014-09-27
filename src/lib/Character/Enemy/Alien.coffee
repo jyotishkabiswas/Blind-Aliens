@@ -44,7 +44,7 @@ class Alien extends GameObject
         @dr = 1
 
         # twice the number of times the alien will return into the middle of the board if he does not find you before he decides to leave
-        @returnQuantity = 10
+        @returnQuantity = 2
 
         # 1 iff the alien is investigating a sound
         @locationNotTouched = 0
@@ -62,6 +62,7 @@ class Alien extends GameObject
         y = @sprite.body.y + @sprite.height / 2
         if (x < -100 or y < -100 or x > game.width + 100 or y > game.height + 100)
             @destroy()
+            @state.score += @SCORE_VALUE
 
         # this part describes what happens if the alien is not dying
         if @alive > 0
@@ -146,10 +147,10 @@ class Alien extends GameObject
             # if the alien is too close to the edge, turn back
             x = @sprite.body.x + @sprite.width / 2
             y = @sprite.body.y + @sprite.height / 2
-            if (x < 0 or y < 0 or x > game.width or y > game.height) and (@returnQuantity > 0 or @soundCountdown > 0)
+            if (x < 0 or y < 0 or x > game.width or y > game.height) and (@returnQuantity > 0)
                 # if the alien knows you are there, he won't stop turning back
                 # if he doesn't, he might leave after some number of tries
-                @returnQuantity += if @soundCountdown == 0 then -1 else 1
+                @returnQuantity -= 1
                 if @returnQuantity % 2 == 1
                     # to return, first turn
                     centerx = 200 + Math.random() * (game.width - 400)
