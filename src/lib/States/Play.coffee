@@ -23,8 +23,6 @@ class Play
         @backdropPlayer.create 0, 0, "background"
         player = new Player game.width / 2, game.height / 2, @
         
-        for i in [1..2]
-            @newAlien()
  
         @shadows.create 0, 0, "side_shadows"
         @score = 0
@@ -54,8 +52,11 @@ class Play
             @score = @score + 1
             @scoreboard.text = @score.toString()
 
-        @count = @count + 1    
-        if (@GameState.numAliens < 2 and Math.random() < 0.03) or (Math.random() < 0.0005 and @GameState.numAliens < 4)
+        @count = @count + 1
+
+        minAliens = @score / 400
+        maxAliens = @score / 200
+        if (@GameState.numAliens < minAliens and Math.random() < 0.03) or (Math.random() < 0.0005 and @GameState.numAliens < maxAliens)
             @newAlien()
 
         for k, v of @GameObjects
