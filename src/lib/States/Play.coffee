@@ -1,5 +1,7 @@
 class Play
 
+    pauseText = null
+
     preload: ->
         game.load.image "shadowmask", "library/assets/shadowmask.png"
         game.load.image "background", "library/assets/background.png"
@@ -29,6 +31,17 @@ class Play
         @count = 0
         @scoreboard = game.add.text 16, 16, '0', { fontSize: '32px', fill: '#FFF'}
         @hud.add(@scoreboard)
+
+        Play.pauseText = game.add.text(
+            game.world.centerX,
+            game.world.centerY,
+            "",
+            { font: "bold 32px Arial", fill: "#ffffff", align: "center" }
+        )
+        Play.pauseText.anchor.setTo 0.5, 0.5
+        game.input.keyboard.onDownCallback = @pauseOrResume
+        return
+
 
     newAlien: (big) ->
         v = Math.random() * 2 * (game.width + game.height)
@@ -62,4 +75,18 @@ class Play
 
         for k, v of @GameObjects
             v.update()
+    destroy: ->
+        game.input.keyboard.onDownCallback = null
+
+    pauseOrResume: ->
+        if game.state.current == "play" && game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)
+            if !(@lastClick?) || game.time.now - @lastClick > 50
+                @lastClick = game.time.now
+                if game.paused
+                    game.paused = false
+                    Play.pauseText.text = ""
+                else
+                    Play.pauseText.text = "Game Paused"
+                    game.paused = true
+        return
 
