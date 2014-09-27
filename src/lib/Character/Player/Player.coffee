@@ -156,7 +156,6 @@ class Player extends GameObject
 
         new Bullet source.x, source.y, (@sprite.angle * Math.PI/180 - Math.PI/2), @state
 
-
     destroy: ->
         super()
         game.state.start "menu"
