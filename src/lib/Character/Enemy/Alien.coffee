@@ -68,6 +68,9 @@ class Alien extends GameObject
         if @alive > 0
             # see if the alien got shot
             for k, v of @state.GameObjects
+                if v.type == "alien"
+                    if v.alive > 0
+                        game.physics.arcade.collide @sprite, v.sprite
                 if v.type == 'bullet'
                     game.physics.arcade.collide @sprite, v.sprite, null, @_hitByBullet, @
             

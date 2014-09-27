@@ -82,7 +82,7 @@ class Play
         minAliens = @score / 400 + 2
         maxAliens = @score / 200 + 2
         if (@GameState.numAliens < minAliens and Math.random() < 0.03) or (Math.random() < 0.0005 and @GameState.numAliens < maxAliens)
-            big = Math.floor ((Math.random() * @score / 1500)) 
+            big = Math.floor ((Math.random() * @score / 1000)) 
             @newAlien(big)
 
         for k, v of @GameObjects

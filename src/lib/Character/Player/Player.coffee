@@ -13,7 +13,7 @@ class Player extends GameObject
         @controls.A = game.input.keyboard.addKey Phaser.Keyboard.A
         @controls.S = game.input.keyboard.addKey Phaser.Keyboard.S
         @controls.D = game.input.keyboard.addKey Phaser.Keyboard.D
-        @bullets = 5
+        @bullets = 10
 
         @WALKING_SPEED = 100
 
