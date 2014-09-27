@@ -30,7 +30,7 @@ class Play
         @shadows.create 0, 0, "side_shadows"
         @score = 0
         @count = 0
-        @scoreboard = game.add.text 16, 16, 'Score: 0\nAmmo: 5', { fontSize: '32px', fill: '#FFF'}
+        @scoreboard = game.add.text 16, 16, 'Score: 0\nAmmo: 10 / 10', { fontSize: '32px', fill: '#FFF'}
         @hud.add(@scoreboard)
 
         Play.pauseText = game.add.text(
@@ -62,8 +62,8 @@ class Play
         @GameState.numAliens += 1
 
     newAmmoBox: ->
-        x = Math.random() * game.width
-        y = Math.random() * game.height
+        x = Math.random() * (game.width - 200) + 100
+        y = Math.random() * (game.height - 200) + 100
  
         new AmmoBox x, y, @
         @GameState.numAmmoBoxes += 1
@@ -71,7 +71,7 @@ class Play
     update: ->
         if 0 ==  @count % 20 
             @score = @score + 1
-        @scoreboard.text = "Score: " + @score.toString() + "\nAmmo: " + @player.bullets.toString()
+        @scoreboard.text = "Score: " + @score.toString() + "\nAmmo: " + @player.bullets.toString() + " / 10"
 
         if 0 == @count % 100
             if @GameState.numAmmoBoxes < 1
@@ -79,8 +79,8 @@ class Play
 
         @count = @count + 1
 
-        minAliens = @score / 400 + 2
-        maxAliens = @score / 200 + 2
+        minAliens = @score / 600 + 2
+        maxAliens = @score / 300 + 2
         if (@GameState.numAliens < minAliens and Math.random() < 0.03) or (Math.random() < 0.0005 and @GameState.numAliens < maxAliens)
             big = Math.floor ((Math.random() * @score / 1000)) 
             @newAlien(big)

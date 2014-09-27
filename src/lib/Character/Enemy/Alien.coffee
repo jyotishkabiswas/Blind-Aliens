@@ -53,6 +53,9 @@ class Alien extends GameObject
         @locationx = 0
         @locationy = 0
 
+        # how long till the alien gives up on reaching the noise location
+        @locationCountdown = 0
+
     update: ->
         # redraw to top
         @sprite.bringToTop()
@@ -81,6 +84,7 @@ class Alien extends GameObject
             # count down all of the timers
             @moveCountdown = @moveCountdown - 1 if @moveCountdown > 0
             @soundCountdown = @soundCountdown - 1 if @soundCountdown > 0
+            @locationCountdown = @locationCountdown - 1 if @locationCountdown > 0
             if @stunCountdown > 0
                 @stunCountdown = @stunCountdown - 1
                 @crawl.isPaused = false if @stunCountdown <= 0
@@ -174,7 +178,7 @@ class Alien extends GameObject
                 # recalculate every 5 turns
                 @moveCountdown = 5
                 # if close to the sound source, stop looking
-                @locationNotTouched = 0 if (x - @locationx) * (x - @locationx) + (y - @locationy) * (y - @locationy) <= 20 * 20
+                @locationNotTouched = 0 if (x - @locationx) * (x - @locationx) + (y - @locationy) * (y - @locationy) <= 20 * 20 or @locationCountdown == 0
                 # remember that the player exists instead of gradually forgetting
                 @soundCountdown = @soundCountdown + 1
 
@@ -200,6 +204,7 @@ class Alien extends GameObject
             @locationy = noisey + Math.random() * 2 * signal_noise - signal_noise
             @locationNotTouched = 1
             @soundCountdown = 5000
+            @locationCountdown = 1000
 
     # cleanup
     destroy: ->
