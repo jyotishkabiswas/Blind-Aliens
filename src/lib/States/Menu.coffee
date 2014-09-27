@@ -23,14 +23,16 @@ Menu =
 		instructionsText = game.add.text(
 			game.world.centerX,
 			400,
-			'Instructions:\n
-			1. Move slowly so that the aliens can\'t hear you\n
-			2. Move fast to run away, risking to be heard by the aliens\n
-			3. Shoot the aliens twice to kill them, while being heard by them\n\n
+			'Synopsis:\n
+			You are trapped in a room with blind aliens.\n
+			Sneak or run. Hide or shoot. Just stay alive.\n
+			\n
 			Controls:\n
-			1. W, A, S, D, or ↑, ←, ↓, →, to move around\n
-			2. Left mouse click for shooting at the wanted position\n
-			3. Spacebar for pause/resume the game',
+			1. Move using W, A, S, D, or ↑, ←, ↓, →\n
+			2. Run by holding W, A, S, D, or ↑, ←, ↓, →\n
+			3. Direct your gun using the mouse\n
+			4. Shoot by clicking your mouse\n
+			3. Pause/resume by hitting spacebar',
 			{font: '16px Arial', fill: '#bbbbbb', align: 'center'}
 		);
 		instructionsText.anchor.setTo(0.5, 0.5);
