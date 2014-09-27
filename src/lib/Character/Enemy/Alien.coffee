@@ -1,18 +1,19 @@
 class Alien extends GameObject
 
-    constructor: (x, y, state) ->
+    constructor: (x, y, state, big) ->
         super(state)
 
         @type = 'alien'
+        @big = big
 
         #unclear whether we use score right now, but it's in here
-        @SCORE_VALUE = 200
+        @SCORE_VALUE = 100 * (big + 1)
 
         #various sprite details
         @sprite = game.add.sprite x, y, "enemy"
         @state.aliens.add(@sprite)
         @sprite.wrapper = @
-        @sprite.scale.setTo 0.3, 0.3
+        @sprite.scale.setTo 0.15 * (big + 1), 0.15 * (big + 1)
         game.physics.arcade.enable @sprite
         @sprite.animations.add "crawl"
         @crawl = @sprite.play "crawl", 8, true
@@ -20,7 +21,7 @@ class Alien extends GameObject
         @sprite.alpha = 1
 
         # of lives left for this alien
-        @alive = 2
+        @alive = big + 2
 
         # how many frames the alien must still be stunned from a gunshot
         @stunCountdown = 0
@@ -36,11 +37,11 @@ class Alien extends GameObject
         @soundCountdown = 0
         
         # how many frames the alien will continue doing its current action
-        @moveCountdown = 0
+        @moveCountdown = 30
 
         # the current action (should we turn? go forward?)
         @dtheta = 0
-        @dr = 0
+        @dr = 1
 
         # twice the number of times the alien will return into the middle of the board if he does not find you before he decides to leave
         @returnQuantity = 10
@@ -96,7 +97,7 @@ class Alien extends GameObject
 
     _hitByBullet: (a, b) ->
         # player gets points for the hit
-        a.wrapper.state.score = a.wrapper.state.score + a.wrapper.SCORE_VALUE / 2
+        a.wrapper.state.score = a.wrapper.state.score + a.wrapper.SCORE_VALUE
 
         # stun the alien
         a.wrapper.crawl.isPaused = true
@@ -105,12 +106,12 @@ class Alien extends GameObject
         # take one life
         a.wrapper.alive = a.wrapper.alive - 1
 
-        # color the alien darker green
-        a.tint = 0x005500
+        # color the alien
+        a.tint = 0xffffff - (Math.floor(255 * (a.wrapper.big + 4 - a.wrapper.alive) / (a.wrapper.big + 4))) * 257
 
         # make the bullet push the alien
-        a.body.velocity.x += b.body.velocity.x / 5
-        a.body.velocity.y += b.body.velocity.y / 5
+        a.body.velocity.x += b.body.velocity.x / 10
+        a.body.velocity.y += b.body.velocity.y / 10
         a.body.acceleration.x = 0
         a.body.acceleration.y = 0
 
@@ -128,8 +129,9 @@ class Alien extends GameObject
             yComponent = Math.cos (@sprite.angle * Math.PI / 180)
             # the alien is slower if already half dead
             multiplier = if @alive == 2 then 2 else 1.7
-            @sprite.body.velocity.x = @dr * xComponent * 100 * @alive
-            @sprite.body.velocity.y = -@dr * yComponent * 100 * @alive
+            multiplier *= Math.pow 1.5, @big 
+            @sprite.body.velocity.x = @dr * xComponent * 50 * multiplier
+            @sprite.body.velocity.y = -@dr * yComponent * 50 * multiplier
         # start a new action
         else
             @sprite.body.acceleration.x = 0
@@ -168,7 +170,7 @@ class Alien extends GameObject
                 # recalculate every 5 turns
                 @moveCountdown = 5
                 # if close to the sound source, stop looking
-                @locationNotTouched = 0 if (x - @locationx) * (x - @locationx) + (y - @locationy) * (y - @locationy) <= 100 * 100
+                @locationNotTouched = 0 if (x - @locationx) * (x - @locationx) + (y - @locationy) * (y - @locationy) <= 20 * 20
                 # remember that the player exists instead of gradually forgetting
                 @soundCountdown = @soundCountdown + 1
 

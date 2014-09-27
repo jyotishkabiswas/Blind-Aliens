@@ -17,13 +17,14 @@ class Player extends GameObject
         @WALKING_SPEED = 100
 
         @sprite = game.add.sprite x, y, "player"
+        @sprite.scale.setTo 0.5, 0.5
         @state.backdropPlayer.add(@sprite)
         @sprite.wrapper = @
         game.physics.arcade.enable @sprite
         @sprite.anchor.x = .5
         @sprite.anchor.y = .75
         @i = 0
-        @footstepCountdown = 3000
+        @footstepCountdown = 1500
         @gunCountdown = 0
         @footstep = game.add.audio "footstep"
         @gun = game.add.audio "gunshot"
@@ -56,7 +57,8 @@ class Player extends GameObject
                     x: @sprite.body.x + @sprite.body.width * @sprite.anchor.x + r * Math.sin(angle)
                     y: @sprite.body.y + @sprite.body.height * @sprite.anchor.y - r * Math.cos(angle)
                 d2 = Math.sqrt(Math.pow(gunLocation.x - v.sprite.body.x - v.sprite.body.width  * 0.5, 2) + Math.pow(gunLocation.y - v.sprite.body.y - v.sprite.body.height * 0.5, 2))
-                if (d < 70 or d2 < 45) and v.alive > 0
+                mult = Math.pow(1.8, v.big)
+                if (d < 35 * mult or d2 < 22.5 * mult) and v.alive > 0
                     @destroy()
 
 
@@ -73,8 +75,8 @@ class Player extends GameObject
         dy = if @controls.up.isDown or @controls.W.isDown then dy - 1 else dy
 
         # adjust acceleration if controls used
-        @sprite.body.acceleration.x = if @sprite.body.velocity.x > 0 then dx*600 else dx*300
-        @sprite.body.acceleration.y = if @sprite.body.velocity.y > 0 then dy*600 else dy*300
+        @sprite.body.acceleration.x = if @sprite.body.velocity.x > 0 then dx*300 else dx*150
+        @sprite.body.acceleration.y = if @sprite.body.velocity.y > 0 then dy*300 else dy*150
 
         # drag if no controls in use
         @sprite.body.acceleration.x = -5 * @sprite.body.velocity.x if @sprite.body.acceleration.x == 0
@@ -97,7 +99,7 @@ class Player extends GameObject
         # toggle reloading warning while reloading gun
         if @gunCountdown == 0
             @reload.visible = false
-        else if 0 == @state.count % 20
+        else if 0 == @state.count % 10
             @reload.visible = not @reload.visible
 
         if @gunCountdown == 0 and game.input.activePointer.isDown
@@ -108,20 +110,20 @@ class Player extends GameObject
         y = @sprite.body.y + @sprite.body.height * @sprite.anchor.y
 
 
-        if x < 20
-            @sprite.body.x = @sprite.body.x + 20 - x
+        if x < 10
+            @sprite.body.x = @sprite.body.x + 10 - x
             @sprite.body.velocity.x = 0
             @sprite.body.acceleration.x = 0
-        if x > game.width - 20
-            @sprite.body.x = @sprite.body.x - x + game.width - 20
+        if x > game.width - 10
+            @sprite.body.x = @sprite.body.x - x + game.width - 10
             @sprite.body.velocity.x = 0
             @sprite.body.acceleration.x = 0
-        if y < 20
-            @sprite.body.y = @sprite.body.y + 20 - y
+        if y < 10
+            @sprite.body.y = @sprite.body.y + 10 - y
             @sprite.body.velocity.y = 0
             @sprite.body.acceleration.y = 0
-        if y > game.height - 20
-            @sprite.body.y = @sprite.body.y - y + game.height - 20
+        if y > game.height - 10
+            @sprite.body.y = @sprite.body.y - y + game.height - 10
             @sprite.body.velocity.y = 0
             @sprite.body.acceleration.y = 0
 
@@ -135,7 +137,7 @@ class Player extends GameObject
         # create footstep sounds every once in a while
         @footstepCountdown = @footstepCountdown - Math.abs(@sprite.body.velocity.x) - Math.abs(@sprite.body.velocity.y)
         if @footstepCountdown < 0
-            @footstepCountdown = 3000
+            @footstepCountdown = 1500
             new Circle @sprite.body.x + @sprite.body.width * @sprite.anchor.x, @sprite.body.y + @sprite.body.height * @sprite.anchor.y, Math.max(Math.abs(@sprite.body.velocity.x), Math.abs(@sprite.body.velocity.y)) * 2, @state
             @footstep.play()
 
