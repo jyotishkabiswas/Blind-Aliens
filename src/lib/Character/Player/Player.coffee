@@ -53,7 +53,7 @@ class Player extends GameObject
         # Die if you hit an alien
         for k, v of @state.GameObjects
             if v.type == 'alien'
-            	if Physics.collides @sprite, v.sprite
+            	if v.alive>0 && Physics.collides @sprite, v.sprite
             		@destroy()
 
             if v.type == 'ammo'
