@@ -4,7 +4,7 @@ GameOver =
         return
 
     create: ->
-        game.add.sprite 0, 0, "background"
+        #game.add.sprite 0, 0, "background"
         titleText = game.add.text(
             game.world.centerX,
             150,
