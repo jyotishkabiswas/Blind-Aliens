@@ -53,11 +53,12 @@ class Player extends GameObject
         # Die if you hit an alien
         for k, v of @state.GameObjects
             if v.type == 'alien'
-            	if v.alive>0 && Physics.collides @sprite, v.sprite
-            		@destroy()
+                if v.alive>0 && Physics.collides @sprite, v.sprite
+                    @destroy()
 
             if v.type == 'ammo'
-                game.physics.arcade.overlap(@sprite,v.sprite,@_collectAmmo, null, this)
+                if Physics.collides @sprite, v.sprite
+                    @_collectAmmo(v.sprite)
 
         # reset acceleration to start
         @sprite.body.acceleration.x = 0
@@ -157,7 +158,7 @@ class Player extends GameObject
             new Bullet source.x, source.y, (@sprite.angle * Math.PI/180 - Math.PI/2), @state
             @bullets -= 1
 
-    _collectAmmo: (player, ammo) ->
+    _collectAmmo: (ammo) ->
         ammo.wrapper.destroy()
         @bullets = Math.min 10, @bullets + 2
 

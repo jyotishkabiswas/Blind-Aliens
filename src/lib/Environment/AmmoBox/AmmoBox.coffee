@@ -10,6 +10,7 @@ class AmmoBox extends GameObject
         game.physics.arcade.enable @sprite
         @sprite.anchor.x = .5
         @sprite.anchor.y = .5
+        @sprite.physicsBody = [{x: 0.5, y: 0.5, radius: 10}]
 
     update: ->
 
