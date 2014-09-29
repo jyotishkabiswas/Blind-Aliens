@@ -7,6 +7,7 @@ class Play
         game.load.image "circle", "library/assets/circle.png"
         game.load.image "bullet", "library/assets/bullet.png"
         game.load.image "ammo", "library/assets/ammo.png"
+        game.load.audio "music", "library/assets/themesong.m4a"
         game.load.spritesheet "enemy", "library/assets/alien_spreadsheet_350_402.png", 350, 402, 4
         game.load.audio "footstep", "library/assets/footstep.m4a"
         game.load.audio "gunshot", "library/assets/gunshot.wav"
@@ -20,6 +21,8 @@ class Play
         @aliens = game.add.group()
         @shadows = game.add.group()
         @hud = game.add.group()
+        @music = game.add.audio("music")
+        @music.play()
         game.physics.startSystem Phaser.Physics.ARCADE
         @backdropPlayer.create 0, 0, "background"
         @player = new Player game.width / 2, game.height / 2, @

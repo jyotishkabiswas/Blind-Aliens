@@ -165,4 +165,5 @@ class Player extends GameObject
 
     destroy: ->
         super()
+        @state.music.stop()
         game.state.start "game_over"
