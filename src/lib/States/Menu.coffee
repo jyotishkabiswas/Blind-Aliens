@@ -28,7 +28,7 @@ Menu =
 			\n
 			Controls:\n
 			1. Move using W, A, S, D, or ↑, ←, ↓, →\n
-			3. Use your mouse to aim and shoot\n
+			2. Use your mouse to aim and shoot\n
 			3. Pause/resume by hitting spacebar',
 			{font: '24px Arial', fill: '#bbbbbb', align: 'center'}
 		);
