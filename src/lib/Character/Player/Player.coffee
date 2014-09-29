@@ -73,8 +73,8 @@ class Player extends GameObject
         dy = if @controls.up.isDown or @controls.W.isDown then dy - 1 else dy
 
         # adjust acceleration if controls used
-        @sprite.body.acceleration.x = if @sprite.body.velocity.x > 0 then dx*300 else dx*150
-        @sprite.body.acceleration.y = if @sprite.body.velocity.y > 0 then dy*300 else dy*150
+        @sprite.body.acceleration.x = if @sprite.body.velocity.x * dx < 0 then dx*300 else dx*150
+        @sprite.body.acceleration.y = if @sprite.body.velocity.y * dy < 0 then dy*300 else dy*150
 
         # drag if no controls in use
         @sprite.body.acceleration.x = -5 * @sprite.body.velocity.x if @sprite.body.acceleration.x == 0
