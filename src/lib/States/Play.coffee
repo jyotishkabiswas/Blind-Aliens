@@ -21,7 +21,7 @@ class Play
         @aliens = game.add.group()
         @shadows = game.add.group()
         @hud = game.add.group()
-        @music = game.add.audio("music")
+        @music = game.add.audio "music", 1, true
         @music.play()
         game.physics.startSystem Phaser.Physics.ARCADE
         @backdropPlayer.create 0, 0, "background"
